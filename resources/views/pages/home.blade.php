@@ -34,7 +34,8 @@
         </button>
 
         <div class="flex items-center gap-3 sm:gap-5">
-          <div class="flex items-center gap-3 sm:gap-4">
+          <!-- Desktop nav links — hidden on mobile, burger menu used instead -->
+          <div class="hidden sm:flex items-center gap-3 sm:gap-4">
             <!-- Nav order: Projects → Experience → FAQs → Gallery → Contact -->
             <button onclick="switchView('projects')" class="nav-link text-xs sm:text-sm font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" data-nav="projects">
               Projects
@@ -53,8 +54,23 @@
             </button>
           </div>
 
-          <div class="w-px h-5 bg-gray-200 dark:bg-gray-700"></div>
+          <!-- Desktop divider — hidden on mobile -->
+          <div class="hidden sm:block w-px h-5 bg-gray-200 dark:bg-gray-700"></div>
 
+          <!-- Burger menu button — mobile only (theme toggle stays outside) -->
+          <button id="burgerMenuBtn" type="button" onclick="toggleBurgerMenu()" class="sm:hidden relative w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Toggle menu" aria-expanded="false">
+            <svg id="burgerIconOpen" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+            <svg id="burgerIconClose" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="6" y1="18" x2="18" y2="6"/>
+            </svg>
+          </button>
+
+          <!-- Theme toggle — always visible (outside burger menu) -->
           <button type="button" onclick="toggleTheme(event)" class="relative w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
             <svg id="sun-icon" class="w-4 h-4 absolute transition-all duration-500 dark:opacity-0 dark:rotate-90 dark:scale-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="4"/>
@@ -67,6 +83,33 @@
         </div>
       </nav>
     </header>
+
+    <!-- ===== Mobile Burger Menu — Full-Screen Floating Overlay ===== -->
+    <div id="mobileNavPanel" class="hidden bg-white dark:bg-ink">
+      <!-- Overlay top bar: Logo + Close -->
+      <div class="border-b border-gray-100 dark:border-gray-800">
+        <div class="max-w-3xl w-full mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <button onclick="switchView('home'); closeBurgerMenu()" class="text-sm font-bold text-black dark:text-white tracking-tight">
+            KRL.MMBRR
+          </button>
+          <button onclick="closeBurgerMenu()" class="relative w-8 h-8 flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" aria-label="Close menu">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="6" y1="6" x2="18" y2="18"/>
+              <line x1="6" y1="18" x2="18" y2="6"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Nav items -->
+      <div class="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-4 flex flex-col gap-1">
+        <button onclick="switchView('home'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="home">Home</button>
+        <button onclick="switchView('projects'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="projects">Projects</button>
+        <button onclick="switchView('experience'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="experience">Experience</button>
+        <button onclick="switchView('faq'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="faq">FAQs</button>
+        <button onclick="switchView('gallery'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="gallery">Gallery</button>
+        <button onclick="navigateToContact(); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3">Contact</button>
+      </div>
+    </div>
 
     <div class="flex-grow w-full">
 
@@ -184,7 +227,7 @@
                   <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">A web-based dashboard platform that helps teams track active projects, monitor progress, manage tasks and deadlines, and stay updated on team activity.</p>
                   <div class="flex flex-wrap gap-1.5 mt-auto pt-3">
                     <span class="category-pill">Web Design</span>
-                    <span class="category-pill">SaaS Dashboard Design</span>
+                    <span class="category-pill">System Dashboard Design</span>
                   </div>
                 </div>
               </div>
@@ -454,7 +497,7 @@
           <!-- ================================== -->
           <!-- ===== 3. EXPERIENCE ============== -->
           <!-- ================================== -->
-          <section id="section-experience" class="w-full space-y-5">
+          <section id="section-experience" class="hidden w-full space-y-5">
             <p class="text-2xl sm:text-3xl font-light tracking-tight text-gray-900 dark:text-white">Experience</p>
 
             <div class="exp-timeline">
@@ -857,7 +900,7 @@
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">A web-based dashboard platform that helps teams track active projects, monitor progress, manage tasks and deadlines, and stay updated on team activity.</p>
                 <div class="flex flex-wrap gap-1.5 mt-auto pt-3">
                   <span class="category-pill">Web Design</span>
-                  <span class="category-pill">SaaS Dashboard Design</span>
+                  <span class="category-pill">System Dashboard Design</span>
                 </div>
               </div>
             </div>

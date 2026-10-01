@@ -1,7 +1,13 @@
+html {
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+}
 body {
   font-family: 'Inter', sans-serif;
   background-color: #ffffff;
   color: #111111;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 .dark body {
   background-color: #111111;
@@ -10,47 +16,35 @@ body {
 
 /* =====================================================
    SCROLL LOCK DURING SKELETON LOADING
-   The visible page scrollbar belongs to the <html> element,
-   which is why locking only <body> was not enough. Both
-   <html> and <body> are now locked while the skeleton is
-   on screen. The scrollbar is completely hidden (Firefox,
-   Chrome, Safari, Edge, legacy IE) and scrolling is also
-   blocked from JavaScript (wheel, touch, keyboard).
-   The lock is released only after the 3-second skeleton
-   animation AND its 0.45s fade-out have fully finished,
-   so the scrollbar never appears, never flashes, and never
-   moves during the loading state — on desktop, laptop,
-   tablet and mobile.
    ===================================================== */
 html.portfolio-loading,
 html:has(body.portfolio-loading) {
   overflow: hidden !important;
   overscroll-behavior: none;
   touch-action: none;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE / legacy Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 html.portfolio-loading::-webkit-scrollbar,
 html:has(body.portfolio-loading)::-webkit-scrollbar {
   width: 0;
   height: 0;
-  display: none; /* Chrome, Safari, Opera, Edge */
+  display: none;
 }
 body.portfolio-loading {
   overflow: hidden !important;
-  height: 100vh; /* Prevent scrollbar from appearing during skeleton load */
+  height: 100vh;
   margin: 0;
   padding: 0;
   overscroll-behavior: none;
   touch-action: none;
-  /* Hide scrollbar completely during loading for all browsers */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 body.portfolio-loading::-webkit-scrollbar {
   width: 0;
   height: 0;
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 /* ===== View Transitions ===== */
@@ -69,6 +63,7 @@ body.portfolio-loading::-webkit-scrollbar {
 /* ===== Initial Content Skeleton ===== */
 .portfolio-shell {
   position: relative;
+  overflow-x: hidden;
 }
 #initial-skeleton {
   position: fixed;
@@ -222,8 +217,6 @@ body.portfolio-loading::-webkit-scrollbar {
 
 /* =====================================================
    MESSAGE SUGGESTIONS
-   Individual suggestion chips rendered inside the
-   #messageSuggestions panel by the JS.
    ===================================================== */
 .message-suggestion {
   width: 100%;
@@ -258,13 +251,6 @@ body.portfolio-loading::-webkit-scrollbar {
 
 /* =====================================================
    MESSAGE SUGGESTIONS PANEL
-   The panel itself is display-controlled here so it can
-   NEVER get stuck hidden: the JS toggles the `hidden`
-   class, the `hidden` attribute AND an inline display
-   rule at the same time. All three hiding mechanisms are
-   covered below, so "Show Suggestions" always works.
-   The !important rules also guarantee that no inline
-   style can ever reveal a closed panel.
    ===================================================== */
 #messageSuggestions {
   display: flex;
@@ -537,29 +523,13 @@ body.portfolio-loading::-webkit-scrollbar {
   box-shadow: 0 30px 60px -15px rgba(0,0,0,0.8), 0 10px 15px -3px rgba(0,0,0,0.6);
 }
 
-/* Featured project cards hidden beyond the first four
-   (applied by initFeaturedProjects in the JS) */
+/* Featured project cards hidden beyond the first four */
 .project-card.hidden {
   display: none !important;
 }
 
 /* =====================================================
-   EXPLORE ADDITIONAL PROJECTS — PILL BADGE (Selected Works)
-   Injected by JS underneath the featured project grid,
-   inside a full-width flex wrapper (.explore-extra-wrap)
-   so the pill is always horizontally centered on desktop,
-   tablet and mobile.
-   Small, compact pill that shares the exact color
-   styling of the "View Resume" button:
-   - Light mode: solid ink (#111111) background with
-     WHITE text — same as bg-ink + text-white.
-   - Dark mode:  solid white background with black
-     text — same as dark:bg-white + dark:text-black.
-   Size, position, shape, spacing and layout are unchanged.
-   The button itself never lifts, scales, or glows — the
-   ONLY hover animation is the arrow sliding forward,
-   exactly like the "View All" button's arrow behavior.
-   Dynamic label: "Explore 1+ Project" / "Explore X+ Projects".
+   EXPLORE ADDITIONAL PROJECTS — PILL BADGE
    ===================================================== */
 .explore-extra-wrap {
   display: flex;
@@ -585,10 +555,8 @@ body.portfolio-loading::-webkit-scrollbar {
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
-  /* Smoothed transitions for background, transform, and shadow */
   transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
 }
-/* Keyboard focus ring only */
 .explore-extra-btn:focus-visible {
   outline: 2px solid rgba(17, 17, 17, 0.45);
   outline-offset: 2px;
@@ -599,7 +567,6 @@ body.portfolio-loading::-webkit-scrollbar {
   flex: 0 0 auto;
   transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* Polished Hover Effect: subtle lift, clean shadow, and slight shade shift */
 .explore-extra-btn:hover {
   background: #222222;
   transform: translateY(-1px);
@@ -609,7 +576,6 @@ body.portfolio-loading::-webkit-scrollbar {
 .explore-extra-btn:focus-visible svg {
   transform: translateX(2px);
 }
-/* Dark mode */
 .dark .explore-extra-btn {
   border-color: #ffffff;
   background: #ffffff;
@@ -935,6 +901,24 @@ section {
   color: #ffffff;
 }
 
+/* =====================================================
+   MOBILE BURGER MENU — FULL-SCREEN FLOATING OVERLAY
+   ===================================================== */
+#mobileNavPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+@media (max-width: 639px) {
+  #mobileNavPanel:not(.hidden) {
+    display: flex;
+  }
+}
+
 /* Status indicator dot */
 .status-dot {
   width: 6px;
@@ -1011,7 +995,6 @@ section {
   display: block;
   cursor: zoom-in;
 }
-/* Web carousel — stack one screen at a time */
 .web-carousel-stage {
   position: relative;
   width: 100%;
@@ -1197,4 +1180,74 @@ section {
 }
 .lightbox-caption {
   pointer-events: none;
+}
+
+/* =====================================================
+   FOOTER MOBILE RESPONSIVENESS
+   ===================================================== */
+@media (max-width: 639px) {
+  .site-footer .flex-nowrap {
+    flex-wrap: wrap;
+  }
+  .site-footer .whitespace-nowrap {
+    white-space: normal;
+  }
+}
+
+/* =====================================================
+   MOBILE BURGER MENU NAVIGATION IMPROVEMENTS
+   Vertically centers, makes prominent, uppercase, and clean.
+   ===================================================== */
+#mobileNavPanel .flex-1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 4.5rem);
+}
+
+#mobileNavPanel .nav-link {
+  display: block;
+  text-align: center;
+  font-size: 1.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1.1rem 0;
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+
+#mobileNavPanel .nav-link:hover,
+#mobileNavPanel .nav-link:focus-visible {
+  transform: translateY(-2px);
+}
+
+/* FIX: hover color now triggers the moment the cursor points
+   at a link — no press/hold required. Uses the exact same hover
+   colors as the existing Tailwind utilities
+   (hover:text-gray-900 / dark:hover:text-white). */
+#mobileNavPanel .nav-link:hover {
+  color: #111827;
+}
+.dark #mobileNavPanel .nav-link:hover {
+  color: #ffffff;
+}
+
+/* =====================================================
+   MOBILE LIGHTBOX CLOSE BUTTON PLACEMENT
+   On small/mobile devices the close (X) button is moved by
+   JS into the navigation row so it always sits in the center
+   area between the Previous and Next buttons — one fixed,
+   consistent, centered position on every mobile screen size
+   and for every Selected Work, regardless of image
+   orientation. Large screens keep the original desktop
+   placement untouched. (The "1 / N" counter is hidden on
+   mobile only, to make room for the centered X button.)
+   ===================================================== */
+@media (max-width: 639px) {
+  .image-lightbox .lightbox-counter {
+    display: none;
+  }
+  .lightbox-nav .lightbox-close {
+    position: static;
+  }
 }

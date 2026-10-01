@@ -1,16 +1,8 @@
 /* =====================================================
    PORTFOLIO SCRIPTS — COMPLETE FILE
-   Load this exactly where your current portfolio script
-   lives (end of <body>, or as a classic/deferred script —
-   NOT type="module" and NOT async, because the inline
-   onclick handlers call global functions like switchView).
    ===================================================== */
 
 /* ---------- Asset base (used by projectData) ---------- */
-/* If your Blade template already defines window.portfolioAssetBase
-   before this script runs, that value is kept. Otherwise it is
-   auto-detected from the NOVA AI banner path, with /assets/ as
-   the final fallback. */
 if (typeof window.portfolioAssetBase === 'undefined') {
   window.portfolioAssetBase = '/assets/';
   try {
@@ -23,15 +15,6 @@ if (typeof window.portfolioAssetBase === 'undefined') {
 
 /* =====================================================
    SCROLL LOCK — active while the skeleton is visible
-   The page is completely frozen during the 3-second
-   skeleton loading animation:
-   - <html> + <body> receive the portfolio-loading class,
-     which hides the scrollbar and blocks overflow.
-   - Wheel, touch and keyboard scrolling are blocked.
-   - Scroll restoration is disabled and the page is held
-     at the top, so the scrollbar thumb never moves.
-   The lock is released only after the skeleton animation
-   AND its fade-out have fully completed.
    ===================================================== */
 let scrollLockActive = false;
 
@@ -55,7 +38,6 @@ function activateScrollLock() {
   document.documentElement.classList.add('portfolio-loading');
   if (document.body) document.body.classList.add('portfolio-loading');
 
-  /* Freeze at the top — no restored scroll positions, no scrollbar movement */
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
 
@@ -80,7 +62,6 @@ function deactivateScrollLock() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
 }
 
-/* Engage the lock immediately, before anything else runs. */
 activateScrollLock();
 
 /* =====================================================
@@ -136,6 +117,46 @@ document.addEventListener('keydown', (e) => {
 let lightboxItems = [];
 let lightboxIndex = 0;
 
+/* =====================================================
+   CLOSE (X) BUTTON PLACEMENT FIX
+   On small/mobile devices the close button is moved into
+   the navigation row so it always sits in the center area
+   between the Previous and Next buttons — one fixed and
+   consistent position on every mobile screen size and for
+   every Selected Work. On large screens it is returned to
+   its original spot, so the desktop layout is untouched.
+   ===================================================== */
+let lightboxCloseDefault = null;
+
+function syncLightboxCloseButton() {
+  const lightbox = document.getElementById('imageLightbox');
+  if (!lightbox) return;
+  const closeBtn = lightbox.querySelector('.lightbox-close');
+  const nav = lightbox.querySelector('.lightbox-nav');
+  const nextBtn = document.getElementById('lightboxNext');
+  if (!closeBtn || !nav || !nextBtn) return;
+
+  if (!lightboxCloseDefault) {
+    lightboxCloseDefault = { parent: closeBtn.parentNode, sibling: closeBtn.nextSibling };
+  }
+
+  if (window.innerWidth < 640) {
+    if (closeBtn.parentNode !== nav) {
+      nav.insertBefore(closeBtn, nextBtn);
+    }
+  } else if (closeBtn.parentNode !== lightboxCloseDefault.parent) {
+    const parent = lightboxCloseDefault.parent;
+    const sibling = lightboxCloseDefault.sibling;
+    if (sibling && sibling.parentNode === parent) {
+      parent.insertBefore(closeBtn, sibling);
+    } else {
+      parent.appendChild(closeBtn);
+    }
+  }
+}
+
+window.addEventListener('resize', syncLightboxCloseButton);
+
 function updateLightboxImage() {
   const lightbox = document.getElementById('imageLightbox');
   const img = document.getElementById('lightboxImage');
@@ -163,6 +184,7 @@ function openImageLightbox(src, alt, items, index) {
   const requestedIndex = Number(index);
   lightboxIndex = Number.isInteger(requestedIndex) && requestedIndex >= 0 && requestedIndex < lightboxItems.length ? requestedIndex : 0;
   lightbox.classList.add('open');
+  syncLightboxCloseButton();
   updateLightboxImage();
   document.body.style.overflow = 'hidden';
 }
@@ -199,8 +221,7 @@ function closeImageLightbox() {
 }
 
 /* =====================================================
-   DOM READY — runs whether the script loads before or
-   after DOMContentLoaded has already fired.
+   DOM READY
    ===================================================== */
 function onDomReady() {
   const lightbox = document.getElementById('imageLightbox');
@@ -233,11 +254,7 @@ function onDomReady() {
   });
 
   initFaqAccordion();
-
-  /* Selected Works — show only the first four projects + centered Explore pill */
   initFeaturedProjects();
-
-  /* Message suggestions — manual toggle only, stays closed after submission */
   initMessageSuggestions();
 
   window.setTimeout(completeInitialSkeleton, 3000);
@@ -268,7 +285,6 @@ let suggestionsOpenedManually = false;
 let suggestionsDelegationBound = false;
 let suggestionsObserver = null;
 
-/* ---------- Element lookups (always fresh — survive re-renders) ---------- */
 function getSuggestionsToggle() {
   let toggleBtn = document.getElementById('toggleSuggestions');
   if (!toggleBtn) {
@@ -329,7 +345,6 @@ function getMessageInput() {
   return messageInput;
 }
 
-/* ---------- Visibility ---------- */
 function isSuggestionsPanelVisible() {
   const panel = getSuggestionsPanel();
   if (!panel) return false;
@@ -374,7 +389,6 @@ function setSuggestionsPanel(open, isManual) {
   if (typeof isManual === 'boolean') suggestionsOpenedManually = open;
 }
 
-/* ---------- Enforcement ---------- */
 function enforceSuggestionsClosed() {
   if (!suggestionsOpenedManually && isSuggestionsPanelVisible()) {
     setSuggestionsPanel(false, false);
@@ -386,7 +400,6 @@ function closeMessageSuggestions() {
   setSuggestionsPanel(false, false);
 }
 
-/* Exposed so any external success handler can also close the panel. */
 window.closeMessageSuggestions = closeMessageSuggestions;
 
 function startSuggestionsGuardObserver() {
@@ -404,7 +417,6 @@ function startSuggestionsGuardObserver() {
   });
 }
 
-/* ---------- Manual toggle (the ONLY way to open) ---------- */
 function handleSuggestionsToggleClick() {
   let panel = getSuggestionsPanel();
   if (!panel) {
@@ -456,7 +468,6 @@ function initMessageSuggestions() {
   if (!suggestionsDiv) return;
 
   buildSuggestionsPanelContent(suggestionsDiv);
-
   setSuggestionsPanel(false, false);
 
   if (suggestionsDelegationBound) {
@@ -668,6 +679,56 @@ function navigateToSection(sectionId) {
 }
 
 /* =====================================================
+   BURGER MENU — Mobile navigation (full-screen overlay)
+   ===================================================== */
+function toggleBurgerMenu() {
+  const panel = document.getElementById('mobileNavPanel');
+  const btn = document.getElementById('burgerMenuBtn');
+  const iconOpen = document.getElementById('burgerIconOpen');
+  const iconClose = document.getElementById('burgerIconClose');
+  if (!panel || !btn) return;
+
+  const isOpen = !panel.classList.contains('hidden');
+  if (isOpen) {
+    closeBurgerMenu();
+  } else {
+    panel.classList.remove('hidden');
+    btn.setAttribute('aria-expanded', 'true');
+    if (iconOpen) iconOpen.classList.add('hidden');
+    if (iconClose) iconClose.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeBurgerMenu() {
+  const panel = document.getElementById('mobileNavPanel');
+  const btn = document.getElementById('burgerMenuBtn');
+  const iconOpen = document.getElementById('burgerIconOpen');
+  const iconClose = document.getElementById('burgerIconClose');
+  if (!panel) return;
+  panel.classList.add('hidden');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
+  if (iconOpen) iconOpen.classList.remove('hidden');
+  if (iconClose) iconClose.classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+(function initBurgerMenuListeners() {
+  document.addEventListener('click', (e) => {
+    const panel = document.getElementById('mobileNavPanel');
+    const btn = document.getElementById('burgerMenuBtn');
+    if (!panel || !btn) return;
+    if (panel.classList.contains('hidden')) return;
+    if (panel.contains(e.target) || btn.contains(e.target)) return;
+    closeBurgerMenu();
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 640) closeBurgerMenu();
+  });
+})();
+
+/* =====================================================
    FEATURED PROJECTS (Selected Works)
    ===================================================== */
 function initFeaturedProjects() {
@@ -740,7 +801,7 @@ const projectData = {
     title: 'FLOWZA',
     image: window.portfolioAssetBase + 'FLOWZA_Banner.png',
     description: 'A web-based dashboard platform that helps teams track active projects, monitor progress, manage tasks and deadlines, and stay updated on team activity.',
-    categories: ['Web Design', 'SaaS Dashboard Design'],
+    categories: ['Web Design', 'System Dashboard Design'],
     type: 'web',
     gallery: [
       { type: 'image', src: window.portfolioAssetBase + 'FLOWZA_DashboardScreen1.png', alt: 'FLOWZA Dashboard Screen 1' },
@@ -854,7 +915,6 @@ function openProject(projectId) {
     catContainer.appendChild(span);
   });
 
-  /* ---------- Build gallery ---------- */
   const galleryContainer = document.getElementById('project-detail-gallery');
   galleryContainer.innerHTML = '';
 
@@ -874,7 +934,6 @@ function openProject(projectId) {
 
   let itemIndex = 0;
 
-  /* ===== Mobile projects → clean interface grid ===== */
   if (project.type === 'mobile' && images.length > 0) {
     const sectionHeading = document.createElement('p');
     sectionHeading.className = 'text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500';
@@ -896,7 +955,6 @@ function openProject(projectId) {
     galleryContainer.appendChild(grid);
   }
 
-  /* ===== Web projects → direct screenshot carousel (no mockup) ===== */
   if (project.type === 'web' && images.length > 0) {
     const sectionHeading = document.createElement('p');
     sectionHeading.className = 'text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500';
@@ -1410,19 +1468,8 @@ function createDragSlider(track, container, direction) {
 })();
 
 /* =====================================================
-   PROJECT CARD HOVER — Glow tracking only
+   >>> YOUR ORIGINAL CODE CONTINUES FROM HERE — DO NOT CHANGE <<<
+   (Your pasted file was cut off at the "PROJECT CARD HOVER —
+   Glow tracking only" section, so keep everything in your
+   file from that section onward EXACTLY as it currently is.)
    ===================================================== */
-(function initProjectCardHover() {
-  const cards = document.querySelectorAll('.project-card');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const px = (x / rect.width) * 100;
-      const py = (y / rect.height) * 100;
-      card.style.setProperty('--mx', px + '%');
-      card.style.setProperty('--my', py + '%');
-    });
-  });
-})();

@@ -64,6 +64,16 @@ function deactivateScrollLock() {
 
 activateScrollLock();
 
+const homeMain = document.querySelector('#view-home > main');
+const educationSection = document.getElementById('section-education');
+const designStackSection = document.getElementById('section-design-stack');
+const featuredSection = document.getElementById('section-featured');
+
+if (homeMain && educationSection && designStackSection && featuredSection) {
+  designStackSection.before(educationSection);
+  designStackSection.after(featuredSection);
+}
+
 /* =====================================================
    MODAL LOGIC
    ===================================================== */
@@ -861,6 +871,29 @@ const projectData = {
     ]
   }
 };
+
+const projectBannerCursorSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="116" height="28" viewBox="0 0 116 28"><rect x="1" y="1" width="114" height="26" rx="13" fill="#111827"/><path d="M10 18 20 8M11 8h9v9" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><text x="33" y="18" fill="white" font-family="Arial,sans-serif" font-size="10.5" font-weight="500">View Project</text></svg>';
+const projectBannerCursor = `url("data:image/svg+xml,${encodeURIComponent(projectBannerCursorSvg)}") 10 14, pointer`;
+
+function initProjectCardInteractions() {
+  document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('pointermove', event => {
+      const bounds = card.getBoundingClientRect();
+      card.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
+      card.style.setProperty('--my', `${event.clientY - bounds.top}px`);
+    });
+  });
+
+  document.querySelectorAll('.project-card > a[data-project-id]').forEach(link => {
+    const bannerImage = link.querySelector('img');
+    if (!bannerImage) return;
+
+    link.style.cursor = 'default';
+    bannerImage.style.cursor = projectBannerCursor;
+  });
+}
+
+initProjectCardInteractions();
 
 let lastViewBeforeProject = 'home';
 

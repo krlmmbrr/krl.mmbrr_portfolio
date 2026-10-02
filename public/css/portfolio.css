@@ -6,7 +6,7 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: #ffffff;
   color: #111111;
-  overflow-x: hidden;
+  overflow-x: clip;
   overscroll-behavior-x: none;
 }
 .dark body {
@@ -63,7 +63,7 @@ body.portfolio-loading::-webkit-scrollbar {
 /* ===== Initial Content Skeleton ===== */
 .portfolio-shell {
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 #initial-skeleton {
   position: fixed;
@@ -521,6 +521,25 @@ body.portfolio-loading::-webkit-scrollbar {
 }
 .dark .project-card:hover {
   box-shadow: 0 30px 60px -15px rgba(0,0,0,0.8), 0 10px 15px -3px rgba(0,0,0,0.6);
+}
+#featuredGrid .project-card > div > a,
+#featuredGrid .project-card > div > p,
+#featuredGrid .project-card .category-pill {
+  transition: color 0.2s ease;
+}
+#featuredGrid .project-card > div > a:hover {
+  color: #4b5563;
+}
+#featuredGrid .project-card > div > p:hover,
+#featuredGrid .project-card .category-pill:hover {
+  color: #111827;
+}
+.dark #featuredGrid .project-card > div > a:hover {
+  color: #d1d5db;
+}
+.dark #featuredGrid .project-card > div > p:hover,
+.dark #featuredGrid .project-card .category-pill:hover {
+  color: #f9fafb;
 }
 
 /* Featured project cards hidden beyond the first four */

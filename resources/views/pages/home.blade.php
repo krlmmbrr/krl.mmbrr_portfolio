@@ -165,7 +165,7 @@
                 </h2>
 
                 <p class="text-base font-light leading-7 text-gray-500 dark:text-gray-400 sm:text-lg sm:leading-8">
-                  I am a UI/UX Designer focused on creating clean, modern, and user-friendly interfaces with strong attention to usability, consistency, and user experience. I build prototypes with
+                  I turn complex ideas into clear, thoughtful digital experiences that feel intuitive and useful. I build prototypes with
                   <span class="tech-item bg-white dark:bg-surface-dark inline-flex items-center gap-2 align-middle whitespace-nowrap rounded-lg border border-dashed border-gray-300 dark:border-gray-700 px-3.5 py-2 text-[0.95rem] leading-none text-gray-800 dark:text-gray-200 shadow-sm mx-0.5">
                     <svg class="w-4 h-4 shrink-0" viewBox="0 0 38 57" fill="none"><path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0Z" fill="#1ABCFE"/><path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0Z" fill="#0ACF83"/><path d="M19 0v19h9.5a9.5 9.5 0 1 0 0-19H19Z" fill="#FF7262"/><path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5Z" fill="#F24E1E"/><path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5Z" fill="#A259FF"/></svg>
                     <span>Figma</span>
@@ -191,7 +191,7 @@
             <div class="flex items-end justify-between gap-4">
               <div>
                 <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-gray-500 dark:text-gray-400">Featured Design</p>
-                <h2 class="mt-1 text-xl sm:text-2xl font-light tracking-tight text-gray-900 dark:text-white">Selected Work</h2>
+                <h2 class="mt-1 text-xl sm:text-2xl font-light tracking-tight text-gray-900 dark:text-white">Selected Projects</h2>
               </div>
               <button id="exploreMoreBtn" onclick="switchView('projects')" class="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white shrink-0 pb-1">
                 <span id="exploreMoreLabel">View All</span>
@@ -204,7 +204,7 @@
             <div id="featuredGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
               <!-- Card 1: NOVA AI -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('novaai')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="novaai" onclick="event.preventDefault(); openProject('novaai')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="NOVA AI" class="w-full h-auto" src="{{ asset('assets/NOVAAI_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -219,7 +219,7 @@
 
               <!-- Card 2: FLOWZA -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('flowza')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="flowza" onclick="event.preventDefault(); openProject('flowza')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="FLOWZA" class="w-full h-auto" src="{{ asset('assets/FLOWZA_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -234,7 +234,7 @@
 
               <!-- Card 3: Planty -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('planty')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="planty" onclick="event.preventDefault(); openProject('planty')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="Planty" class="w-full h-auto" src="{{ asset('assets/Planty_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -249,7 +249,7 @@
 
               <!-- Card 4: NORVA -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('norva')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="norva" onclick="event.preventDefault(); openProject('norva')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="NORVA" class="w-full h-auto" src="{{ asset('assets/Norva_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -264,7 +264,7 @@
 
               <!-- Card 5: Car Rental -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('carrental')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="carrental" onclick="event.preventDefault(); openProject('carrental')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="Car Rental" class="w-full h-auto" src="{{ asset('assets/CarRental_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -279,7 +279,7 @@
 
               <!-- Card 6: Music Player -->
               <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-                <a href="#" onclick="event.preventDefault(); openProject('musicplayer')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+                <a href="#" data-project-id="musicplayer" onclick="event.preventDefault(); openProject('musicplayer')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                   <img alt="Music Player" class="w-full h-auto" src="{{ asset('assets/MusicPlayer_Banner.png') }}">
                 </a>
                 <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -593,7 +593,7 @@
                       <path d="M12 22C12 22 18 16 18 10C18 6.69 15.31 4 12 4C8.69 4 6 6.69 6 10C6 16 12 22 12 22Z"/>
                       <path d="M14.5 10C14.5 11.38 13.38 12.5 12 12.5C10.62 12.5 9.5 11.38 9.5 10C9.5 8.62 10.62 7.5 12 7.5C13.38 7.5 14.5 8.62 14.5 10Z"/>
                     </svg>
-                    <span>Urdaneta City, Pangasinan, Philippines</span>
+                    <span>San Vicente West, Urdaneta City, Pangasinan, Philippines</span>
                   </p>
                 </div>
               </div>
@@ -612,7 +612,7 @@
                       <path d="M12 22C12 22 18 16 18 10C18 6.69 15.31 4 12 4C8.69 4 6 6.69 6 10C6 16 12 22 12 22Z"/>
                       <path d="M14.5 10C14.5 11.38 13.38 12.5 12 12.5C10.62 12.5 9.5 11.38 9.5 10C9.5 8.62 10.62 7.5 12 7.5C13.38 7.5 14.5 8.62 14.5 10Z"/>
                     </svg>
-                    <span>Guiset Sur, San Manuel, Pangasinan, Philippines</span>
+                    <span>Quirino Street. Guiset Sur, San Manuel, Pangasinan, Philippines</span>
                   </p>
                 </div>
               </div>
@@ -662,14 +662,16 @@
           <section id="section-contact" class="w-full space-y-5">
             <p class="text-2xl sm:text-3xl font-light tracking-tight text-gray-900 dark:text-white">Let's work together.</p>
 
-            <div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-              <div class="space-y-4">
-                <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
+            <div class="grid grid-cols-[minmax(0,0.7fr)_minmax(0,1fr)] items-start gap-4 sm:gap-6 lg:grid-cols-[0.7fr_1.1fr] lg:items-center max-lg:flex max-lg:flex-col max-sm:items-center">
+              <div class="min-w-0 max-lg:order-2">
+                <img src="{{ asset('assets/gallery2.png') }}" alt="Graduation portrait" class="block h-auto w-full max-w-56 rounded-2xl border border-gray-200/80 object-contain dark:border-slate-700/80 max-sm:mx-auto">
+              </div>
+              <div class="min-w-0 space-y-5 max-lg:contents max-lg:space-y-0">
+                <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl max-lg:order-1">
                   Have a project in mind, a question, or just want to connect? Reach out through any of my social platforms — Instagram, Facebook, LinkedIn, or send me an email and I'll get back to you.
                 </p>
-              </div>
-              <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                <a href="mailto:karljustinermembrere11272003@gmail.com" class="group flex items-center justify-between gap-4 rounded-2xl border border-gray-200/80 bg-white/90 px-4 py-4 shadow-sm transition-all hover:-translate-y-1 hover:border-gray-300 hover:bg-white hover:shadow-md dark:border-slate-700/80 dark:bg-slate-900/80 dark:hover:border-gray-600 dark:hover:bg-slate-800/90">
+                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 max-lg:order-3 max-lg:grid-cols-1 max-sm:w-full max-sm:min-w-0">
+                  <a href="mailto:karljustinermembrere11272003@gmail.com" class="group flex items-center justify-between gap-4 rounded-2xl border border-gray-200/80 bg-white/90 px-4 py-4 shadow-sm transition-all hover:-translate-y-1 hover:border-gray-300 hover:bg-white hover:shadow-md dark:border-slate-700/80 dark:bg-slate-900/80 dark:hover:border-gray-600 dark:hover:bg-slate-800/90">
                   <div class="flex min-w-0 items-center gap-3">
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-ink dark:bg-slate-800 dark:text-white">
                       <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4H19C20.1 4 21 4.9 21 6V18C21 19.1 20.1 20 19 20H5C3.9 20 3 19.1 3 18V6C3 4.9 3.9 4 5 4Z"/><path d="M3 7L12 13L21 7"/></svg>
@@ -680,9 +682,9 @@
                     </div>
                   </div>
                   <svg class="h-4 w-4 shrink-0 text-gray-300 group-hover:translate-x-1 group-hover:text-gray-700 dark:text-slate-500 dark:group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                </a>
+                  </a>
 
-                <button onclick="openModal()" class="group flex items-center justify-between gap-4 rounded-2xl border border-gray-200/80 bg-white/90 px-4 py-4 shadow-sm transition-all hover:-translate-y-1 hover:border-gray-300 hover:bg-white hover:shadow-md dark:border-slate-700/80 dark:bg-slate-900/80 dark:hover:border-gray-600 dark:hover:bg-slate-800/90 text-left w-full">
+                  <button onclick="openModal()" class="group flex items-center justify-between gap-4 rounded-2xl border border-gray-200/80 bg-white/90 px-4 py-4 shadow-sm transition-all hover:-translate-y-1 hover:border-gray-300 hover:bg-white hover:shadow-md dark:border-slate-700/80 dark:bg-slate-900/80 dark:hover:border-gray-600 dark:hover:bg-slate-800/90 text-left w-full">
                   <div class="flex min-w-0 items-center gap-3">
                     <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gray-100 text-ink dark:bg-slate-800 dark:text-white">
                       <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
@@ -693,7 +695,8 @@
                     </div>
                   </div>
                   <svg class="h-4 w-4 shrink-0 text-gray-300 group-hover:translate-x-1 group-hover:text-gray-700 dark:text-slate-500 dark:group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
+                  </button>
+                </div>
               </div>
             </div>
           </section>
@@ -877,7 +880,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
             <!-- Card 1: NOVA AI -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('novaai')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="novaai" onclick="event.preventDefault(); openProject('novaai')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="NOVA AI" class="w-full h-auto" src="{{ asset('assets/NOVAAI_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -892,7 +895,7 @@
 
             <!-- Card 2: FLOWZA -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('flowza')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="flowza" onclick="event.preventDefault(); openProject('flowza')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="FLOWZA" class="w-full h-auto" src="{{ asset('assets/FLOWZA_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -907,7 +910,7 @@
 
             <!-- Card 3: Planty -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('planty')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="planty" onclick="event.preventDefault(); openProject('planty')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="Planty" class="w-full h-auto" src="{{ asset('assets/Planty_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -922,7 +925,7 @@
 
             <!-- Card 4: NORVA -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('norva')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="norva" onclick="event.preventDefault(); openProject('norva')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="NORVA" class="w-full h-auto" src="{{ asset('assets/Norva_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -937,7 +940,7 @@
 
             <!-- Card 5: Car Rental -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('carrental')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="carrental" onclick="event.preventDefault(); openProject('carrental')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="Car Rental" class="w-full h-auto" src="{{ asset('assets/CarRental_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
@@ -952,7 +955,7 @@
 
             <!-- Card 6: Music Player -->
             <div class="project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden">
-              <a href="#" onclick="event.preventDefault(); openProject('musicplayer')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+              <a href="#" data-project-id="musicplayer" onclick="event.preventDefault(); openProject('musicplayer')" class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
                 <img alt="Music Player" class="w-full h-auto" src="{{ asset('assets/MusicPlayer_Banner.png') }}">
               </a>
               <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">

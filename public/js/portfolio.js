@@ -106,10 +106,372 @@ if (callModalElement) {
   });
 }
 
+const PORTFOLIO_ASSISTANT_LIMIT = 500;
+let portfolioAssistantRequestInFlight = false;
+
+function setPortfolioAssistantScrollLock(isOpen) {
+  document.documentElement.classList.toggle('portfolio-assistant-open', isOpen);
+  document.body.classList.toggle('portfolio-assistant-open', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  document.documentElement.style.overflow = isOpen ? 'hidden' : '';
+}
+
+function openPortfolioAssistant() {
+  const modal = document.getElementById('portfolioAssistantModal');
+  if (!modal) return;
+
+  modal.classList.remove('hidden');
+  modal.setAttribute('aria-hidden', 'false');
+  setPortfolioAssistantScrollLock(true);
+  const input = document.getElementById('portfolioAssistantInput');
+  if (input) {
+    window.setTimeout(() => {
+      input.focus();
+      updatePortfolioAssistantInputHeight();
+      renderPortfolioSuggestions();
+      const end = input.value.length;
+      try { input.setSelectionRange(end, end); } catch (error) {}
+    }, 80);
+  }
+}
+
+function closePortfolioAssistant() {
+  const modal = document.getElementById('portfolioAssistantModal');
+  const input = getPortfolioAssistantInput();
+  if (!modal) return;
+
+  if (input) {
+    input.value = '';
+    updatePortfolioAssistantInputHeight();
+    updatePortfolioAssistantCounter();
+  }
+
+  modal.classList.add('hidden');
+  modal.setAttribute('aria-hidden', 'true');
+  setPortfolioAssistantScrollLock(false);
+}
+
+function getPortfolioAssistantInput() {
+  return document.getElementById('portfolioAssistantInput');
+}
+
+function getPortfolioAssistantMessages() {
+  return document.getElementById('portfolioAssistantMessages');
+}
+
+function updatePortfolioAssistantCounter() {
+  const input = getPortfolioAssistantInput();
+  const counter = document.getElementById('portfolioAssistantCounter');
+  if (!input || !counter) return;
+  counter.textContent = `${input.value.length}/${PORTFOLIO_ASSISTANT_LIMIT}`;
+}
+
+function getPortfolioAssistantSuggestions(message = '') {
+  const text = (message || '').toLowerCase();
+
+  if (text.includes('planty')) {
+    return [
+      'What tools were used for Planty?',
+      'What other projects has Karl designed?',
+      'Tell me about FLOWZA.',
+      'Is Karl available for freelance work?'
+    ];
+  }
+
+  if (text.includes('flowza')) {
+    return [
+      'What does Karl specialize in?',
+      'Tell me about Nova AI.',
+      'What tools does Karl use?',
+      'Is Karl available for freelance work?'
+    ];
+  }
+
+  if (text.includes('nova') || text.includes('nova ai')) {
+    return [
+      'What other projects has Karl designed?',
+      'What tools were used for Nova AI?',
+      'Tell me about FLOWZA.',
+      'Is Karl available for freelance work?'
+    ];
+  }
+
+  if (text.includes('tool') || text.includes('figma') || text.includes('affinity') || text.includes('design system')) {
+    return [
+      'What does Karl specialize in?',
+      'What projects has Karl worked on?',
+      'Tell me about his UI/UX experience.',
+      'Is Karl available for freelance work?'
+    ];
+  }
+
+  if (text.includes('freelance') || text.includes('hire') || text.includes('available') || text.includes('work')) {
+    return [
+      'What projects has Karl worked on?',
+      'What tools does Karl use?',
+      'What does Karl specialize in?',
+      'How can I contact Karl?'
+    ];
+  }
+
+  return [
+    'What projects has Karl worked on?',
+    'What tools does Karl use?',
+    'What does Karl specialize in?',
+    'Is Karl available for freelance work?'
+  ];
+}
+
+function renderPortfolioSuggestions(message = '') {
+  const messages = getPortfolioAssistantMessages();
+  if (!messages) return;
+
+  let container = messages.querySelector('.portfolio-assistant-suggestions');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'portfolio-assistant-suggestions';
+    messages.appendChild(container);
+  }
+
+  const suggestions = getPortfolioAssistantSuggestions(message);
+  container.innerHTML = '';
+
+  suggestions.forEach((question) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'portfolio-chat-suggestion';
+    button.setAttribute('data-portfolio-question', question);
+    button.textContent = question;
+    container.appendChild(button);
+  });
+}
+
+function buildPortfolioMessageIcon(type) {
+  const icon = document.createElement('span');
+  icon.className = 'portfolio-message-icon';
+  icon.setAttribute('aria-hidden', 'true');
+
+  if (type === 'assistant') {
+    icon.innerHTML = `
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="7" y="6" width="10" height="12" rx="2.5"></rect>
+        <path d="M9.5 10h5M9.5 14h2.5"></path>
+        <path d="M7 9.5 5 8.5v7l2-1"></path>
+        <path d="M17 9.5 19 8.5v7l-2-1"></path>
+      </svg>`;
+    return icon;
+  }
+
+  icon.textContent = 'U';
+  return icon;
+}
+
+function appendPortfolioAssistantMessage(message, sender) {
+  const wrapper = getPortfolioAssistantMessages();
+  if (!wrapper || !message) return;
+
+  const item = document.createElement('div');
+  item.className = `portfolio-message portfolio-message-${sender}`;
+
+  const author = document.createElement('div');
+  author.className = 'portfolio-message-author';
+
+  const icon = buildPortfolioMessageIcon(sender);
+  author.appendChild(icon);
+
+  const label = document.createElement('span');
+  label.textContent = sender === 'assistant' ? 'AI Assistant' : 'User';
+  author.appendChild(label);
+  item.appendChild(author);
+
+  const bubble = document.createElement('div');
+  bubble.className = 'portfolio-message-bubble';
+  bubble.textContent = message;
+  item.appendChild(bubble);
+
+  wrapper.appendChild(item);
+  wrapper.scrollTop = wrapper.scrollHeight;
+}
+
+function updatePortfolioAssistantInputHeight() {
+  const input = getPortfolioAssistantInput();
+  if (!input) return;
+
+  input.style.height = 'auto';
+  const maxHeight = 128;
+  const nextHeight = Math.min(input.scrollHeight, maxHeight);
+  input.style.height = `${Math.max(44, nextHeight)}px`;
+  input.style.overflowY = input.scrollHeight > maxHeight ? 'auto' : 'hidden';
+}
+
+function setPortfolioAssistantBusy(isBusy, message) {
+  const button = document.getElementById('portfolioAssistantSend');
+  const input = getPortfolioAssistantInput();
+  const status = document.getElementById('portfolioAssistantStatus');
+
+  if (button) {
+    button.disabled = isBusy;
+    button.textContent = isBusy ? 'Sending...' : 'Send';
+  }
+
+  if (input) {
+    input.disabled = isBusy;
+  }
+
+  if (status) {
+    status.textContent = message || (isBusy ? 'Thinking...' : 'Portfolio-focused questions only');
+  }
+}
+
+function clearPortfolioAssistantStatus() {
+  const status = document.getElementById('portfolioAssistantStatus');
+  if (status) {
+    status.textContent = 'Portfolio-focused questions only';
+  }
+}
+
+async function submitPortfolioAssistantMessage(rawMessage) {
+  const trimmed = (rawMessage || '').trim();
+  const input = getPortfolioAssistantInput();
+  if (!trimmed) {
+    if (input) input.focus();
+    return;
+  }
+
+  if (trimmed.length > PORTFOLIO_ASSISTANT_LIMIT) {
+    const status = document.getElementById('portfolioAssistantStatus');
+    if (status) status.textContent = 'Please keep your message under 500 characters.';
+    if (input) {
+      input.focus();
+      input.value = trimmed.slice(0, PORTFOLIO_ASSISTANT_LIMIT);
+      updatePortfolioAssistantCounter();
+    }
+    return;
+  }
+
+  if (portfolioAssistantRequestInFlight) return;
+
+  portfolioAssistantRequestInFlight = true;
+  appendPortfolioAssistantMessage(trimmed, 'user');
+  if (input) input.value = '';
+  updatePortfolioAssistantCounter();
+  setPortfolioAssistantBusy(true, 'Thinking...');
+
+  try {
+    const response = await fetch('/api/portfolio-chat', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+      },
+      body: JSON.stringify({ message: trimmed })
+    });
+
+    const data = await response.json().catch(() => ({}));
+    let reply = data && data.message ? data.message : 'Something went wrong while contacting the assistant. Please try again.';
+
+    if (response.status === 429) {
+      reply = "You're sending messages a little too quickly. Please try again in a moment.";
+    } else if (response.status === 503) {
+      reply = 'The AI assistant is temporarily unavailable. Please try again later.';
+    } else if (!response.ok) {
+      if (response.status >= 500) {
+        reply = 'Something went wrong while contacting the assistant. Please try again.';
+      } else if (response.status === 400) {
+        reply = 'Please enter a valid portfolio-related question.';
+      }
+    }
+
+    appendPortfolioAssistantMessage(reply, 'assistant');
+    renderPortfolioSuggestions(trimmed);
+  } catch (error) {
+    appendPortfolioAssistantMessage('Something went wrong while contacting the assistant. Please try again.', 'assistant');
+    renderPortfolioSuggestions(trimmed);
+  } finally {
+    portfolioAssistantRequestInFlight = false;
+    setPortfolioAssistantBusy(false, 'Portfolio-focused questions only');
+    const inputField = getPortfolioAssistantInput();
+    if (inputField) inputField.focus();
+  }
+}
+
+function initPortfolioAssistantChat() {
+  const openButton = document.getElementById('openPortfolioAssistantBtn');
+  const closeButton = document.getElementById('closePortfolioAssistantBtn');
+  const modal = document.getElementById('portfolioAssistantModal');
+  const form = document.getElementById('portfolioAssistantForm');
+  const input = getPortfolioAssistantInput();
+
+  if (openButton) {
+    openButton.addEventListener('click', openPortfolioAssistant);
+  }
+
+  if (closeButton) {
+    closeButton.addEventListener('click', closePortfolioAssistant);
+  }
+
+  if (modal) {
+    modal.addEventListener('click', (event) => {
+      if (event.target && event.target.matches('[data-close-assistant="true"]')) {
+        closePortfolioAssistant();
+      }
+    });
+  }
+
+  if (input) {
+    input.addEventListener('input', () => {
+      updatePortfolioAssistantCounter();
+      clearPortfolioAssistantStatus();
+      updatePortfolioAssistantInputHeight();
+    });
+
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        const message = input.value.trim();
+        if (message) {
+          submitPortfolioAssistantMessage(message);
+        }
+      }
+    });
+
+    updatePortfolioAssistantInputHeight();
+  }
+
+  renderPortfolioSuggestions();
+
+  if (form) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const message = input ? input.value.trim() : '';
+      submitPortfolioAssistantMessage(message);
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const suggestion = event.target.closest('.portfolio-chat-suggestion');
+    if (!suggestion) return;
+
+    event.preventDefault();
+    const question = suggestion.getAttribute('data-portfolio-question') || suggestion.textContent.trim();
+    if (!question) return;
+    openPortfolioAssistant();
+    const inputField = getPortfolioAssistantInput();
+    if (inputField) {
+      inputField.value = question;
+      updatePortfolioAssistantCounter();
+      submitPortfolioAssistantMessage(question);
+    }
+  });
+}
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     const modal = document.getElementById('callModal');
     if (modal && !modal.classList.contains('hidden')) closeModal();
+    const assistantModal = document.getElementById('portfolioAssistantModal');
+    if (assistantModal && !assistantModal.classList.contains('hidden')) closePortfolioAssistant();
     const lightbox = document.getElementById('imageLightbox');
     if (lightbox && lightbox.classList.contains('open')) closeImageLightbox();
   } else if (e.key === 'ArrowLeft') {
@@ -266,7 +628,9 @@ function onDomReady() {
   initFaqAccordion();
   initFeaturedProjects();
   initMessageSuggestions();
+  initPortfolioAssistantChat();
 
+  completeInitialSkeleton();
   window.setTimeout(completeInitialSkeleton, 3000);
 }
 
@@ -598,11 +962,13 @@ let initialSkeletonComplete = false;
 function completeInitialSkeleton() {
   if (initialSkeletonComplete) return;
   initialSkeletonComplete = true;
-  requestAnimationFrame(() => {
-    const shell = document.querySelector('.portfolio-shell');
-    if (shell) shell.classList.remove('is-initial-loading');
-    window.setTimeout(deactivateScrollLock, 500);
-  });
+
+  const shell = document.querySelector('.portfolio-shell');
+  if (shell) shell.classList.remove('is-initial-loading');
+
+  window.setTimeout(() => {
+    deactivateScrollLock();
+  }, 100);
 }
 
 window.setTimeout(completeInitialSkeleton, 3000);
@@ -877,6 +1243,8 @@ const projectBannerCursor = `url("data:image/svg+xml,${encodeURIComponent(projec
 
 function initProjectCardInteractions() {
   document.querySelectorAll('.project-card').forEach(card => {
+    if (card.dataset.projectInteractionBound === 'true') return;
+    card.dataset.projectInteractionBound = 'true';
     card.addEventListener('pointermove', event => {
       const bounds = card.getBoundingClientRect();
       card.style.setProperty('--mx', `${event.clientX - bounds.left}px`);
@@ -896,6 +1264,69 @@ function initProjectCardInteractions() {
 initProjectCardInteractions();
 
 let lastViewBeforeProject = 'home';
+let projectNavigationMode = 'direct';
+
+function updateProjectDetailBackButton() {
+  const backButton = document.getElementById('project-detail-back-button');
+  if (!backButton) return;
+
+  const label = document.querySelector('#project-detail-back-button span');
+  if (label) {
+    label.textContent = projectNavigationMode === 'explore' ? 'Back to Home' : 'Back';
+  }
+}
+
+function renderExploreOtherProjects(activeProjectId) {
+  const recommendationsWrap = document.getElementById('project-detail-recommendations');
+  const recommendationsGrid = document.getElementById('project-recommendations-grid');
+  if (!recommendationsWrap || !recommendationsGrid) return;
+
+  const otherProjectIds = Object.keys(projectData).filter(id => id !== activeProjectId);
+  if (otherProjectIds.length === 0) {
+    recommendationsWrap.classList.add('hidden');
+    recommendationsGrid.innerHTML = '';
+    return;
+  }
+
+  recommendationsGrid.innerHTML = '';
+  otherProjectIds.forEach(projectId => {
+    const project = projectData[projectId];
+    if (!project) return;
+
+    const card = document.createElement('a');
+    card.href = '#';
+    card.className = 'project-card flex h-full flex-col gap-2 bg-white dark:bg-ink border border-gray-300 dark:border-gray-700 p-2 rounded-xl w-full overflow-hidden';
+    card.setAttribute('data-project-id', projectId);
+    card.onclick = (event) => {
+      event.preventDefault();
+      openProject(projectId, 'explore');
+    };
+
+    card.innerHTML = `
+      <span class="block rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 relative z-20 bg-white dark:bg-ink">
+        <img alt="${project.title}" class="w-full h-auto" src="${project.image}">
+      </span>
+      <div class="flex flex-1 flex-col px-2 mt-3 relative z-20">
+        <span class="text-lg font-semibold tracking-tight text-gray-900 dark:text-white leading-none">${project.title}</span>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400 line-clamp-2">${project.description}</p>
+        <div class="flex flex-wrap gap-1.5 mt-auto pt-3">
+          ${(project.categories || []).slice(0, 2).map(cat => `<span class="category-pill">${cat}</span>`).join('')}
+        </div>
+      </div>
+    `;
+
+    const bannerImage = card.querySelector('img');
+    if (bannerImage) {
+      card.style.cursor = 'default';
+      bannerImage.style.cursor = projectBannerCursor;
+    }
+
+    recommendationsGrid.appendChild(card);
+  });
+
+  initProjectCardInteractions();
+  recommendationsWrap.classList.remove('hidden');
+}
 
 /* ===== Helper to build clean interface shot (no device mockup) ===== */
 function buildInterfaceShot(src, alt) {
@@ -922,9 +1353,12 @@ function buildWebSlide(src, alt, items, index) {
 /* =====================================================
    OPEN PROJECT — builds mobile grid / web carousel
    ===================================================== */
-function openProject(projectId) {
+function openProject(projectId, navigationMode = 'direct') {
   const project = projectData[projectId];
   if (!project) return;
+
+  projectNavigationMode = navigationMode;
+  updateProjectDetailBackButton();
 
   const activeView = document.querySelector('.view.active');
   if (activeView) {
@@ -951,7 +1385,11 @@ function openProject(projectId) {
   const galleryContainer = document.getElementById('project-detail-gallery');
   galleryContainer.innerHTML = '';
 
-  if (!project.gallery || project.gallery.length === 0) return;
+  if (!project.gallery || project.gallery.length === 0) {
+    renderExploreOtherProjects(projectId);
+    switchView('project-detail');
+    return;
+  }
 
   let images = project.gallery.filter(i => i.type === 'image');
 
@@ -1070,11 +1508,15 @@ function openProject(projectId) {
     updateCarousel();
   }
 
+  renderExploreOtherProjects(projectId);
   switchView('project-detail');
 }
 
 function closeProject() {
-  switchView(lastViewBeforeProject || 'projects');
+  const targetView = projectNavigationMode === 'explore' ? 'home' : (lastViewBeforeProject || 'projects');
+  projectNavigationMode = 'direct';
+  updateProjectDetailBackButton();
+  switchView(targetView);
 }
 
 /* =====================================================

@@ -179,6 +179,15 @@
                       <path d="M9 18l6-6-6-6"/>
                     </svg>
                   </a>
+
+                  <button id="openPortfolioAssistantBtn" type="button" class="portfolio-chat-launcher group inline-flex items-center gap-2 bg-ink px-5 py-3 text-base font-medium text-white rounded-lg transition-transform hover:scale-[1.02] dark:bg-white dark:text-black">
+                    <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <path d="M8 10h8"/>
+                      <path d="M8 14h5"/>
+                      <path d="M5 18.5V7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v6A2.5 2.5 0 0 1 16.5 16H9l-4 3v-1.5A2.5 2.5 0 0 1 5 18.5Z"/>
+                    </svg>
+                    <span>Chat with Karl Justine</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -978,7 +987,7 @@
       <div id="view-project-detail" class="view">
         <main class="mx-auto flex w-full max-w-3xl flex-col gap-10 sm:gap-12 px-4 sm:px-6 pt-8 sm:pt-12 pb-10 sm:pb-16">
 
-          <button onclick="closeProject()" class="group inline-flex w-fit items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
+          <button id="project-detail-back-button" onclick="closeProject()" class="group inline-flex w-fit items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
             <svg class="h-4 w-4 transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M15 18l-6-6 6-6"/>
             </svg>
@@ -1001,6 +1010,16 @@
 
           <!-- Project Detail Gallery (mobile grid + web carousel) -->
           <div id="project-detail-gallery" class="space-y-10"></div>
+
+          <div id="project-detail-recommendations" class="hidden space-y-5">
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <p class="text-[11px] font-bold uppercase tracking-[0.22em] text-gray-500 dark:text-gray-400">Continue Exploring</p>
+                <h2 class="mt-1 text-xl sm:text-2xl font-light tracking-tight text-gray-900 dark:text-white">Explore Other Projects</h2>
+              </div>
+            </div>
+            <div id="project-recommendations-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2"></div>
+          </div>
         </main>
       </div>
 
@@ -1246,6 +1265,49 @@
             <span id="submitBtnText">Send Message</span>
           </button>
         </form>
+      </div>
+    </div>
+
+    <div id="portfolioAssistantModal" class="hidden" aria-hidden="true">
+      <div class="portfolio-assistant-backdrop" data-close-assistant="true"></div>
+      <div class="portfolio-assistant-panel-wrap">
+        <div id="portfolioAssistantPanel" class="portfolio-assistant-panel" role="dialog" aria-modal="true" aria-labelledby="portfolioAssistantTitle">
+          <div class="portfolio-assistant-header">
+            <div>
+              <p class="portfolio-assistant-kicker">AI Assistant</p>
+              <h3 id="portfolioAssistantTitle">Chat with Karl Justine</h3>
+            </div>
+            <button type="button" id="closePortfolioAssistantBtn" class="portfolio-assistant-close" aria-label="Close chat">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M6 6L18 18M6 18L18 6"/>
+              </svg>
+            </button>
+          </div>
+
+          <div id="portfolioAssistantMessages" class="portfolio-assistant-messages" aria-live="polite">
+            <div class="portfolio-message portfolio-message-assistant">
+              <div class="portfolio-message-author"><span class="portfolio-message-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="6" width="10" height="12" rx="2.5"/><path d="M9.5 10h5M9.5 14h2.5"/><path d="M7 9.5 5 8.5v7l2-1"/><path d="M17 9.5 19 8.5v7l-2-1"/></svg></span><span>AI Assistant</span></div>
+              <div class="portfolio-message-bubble">Hi! I'm Karl Justine. Ask me about my projects, skills, experience, services, or availability.</div>
+            </div>
+            <div class="portfolio-assistant-suggestions">
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What projects has Karl Justine worked on?">What projects has Karl Justine worked on?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What services does Karl Justine offer?">What services does Karl Justine offer?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What tools does Karl Justine use?">What tools does Karl Justine use?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Is Karl Justine available for work?">Is Karl Justine available for work?</button>
+            </div>
+          </div>
+
+          <form id="portfolioAssistantForm" class="portfolio-assistant-form">
+            <div class="portfolio-assistant-input-row">
+              <textarea id="portfolioAssistantInput" rows="1" maxlength="500" placeholder="Ask about Karl Justine's projects, skills, or availability..." aria-label="Ask the portfolio assistant"></textarea>
+              <button type="submit" id="portfolioAssistantSend" class="portfolio-assistant-send">Send</button>
+            </div>
+            <div class="portfolio-assistant-meta">
+              <span id="portfolioAssistantStatus">Portfolio-focused questions only</span>
+              <span id="portfolioAssistantCounter">0/500</span>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
 

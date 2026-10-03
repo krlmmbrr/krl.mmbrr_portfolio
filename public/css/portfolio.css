@@ -14,6 +14,14 @@ body {
   color: #ffffff;
 }
 
+html.portfolio-assistant-open,
+body.portfolio-assistant-open {
+  overflow: hidden !important;
+  height: 100%;
+  touch-action: none;
+  overscroll-behavior: none;
+}
+
 /* =====================================================
    SCROLL LOCK DURING SKELETON LOADING
    ===================================================== */
@@ -247,6 +255,403 @@ body.portfolio-loading::-webkit-scrollbar {
   border-color: #6b7280;
   background-color: #1f2937;
   color: #f9fafb;
+}
+
+.portfolio-assistant-panel-wrap {
+  position: relative;
+  z-index: 110;
+  width: min(100%, 42rem);
+  margin: 0 auto;
+  pointer-events: none;
+}
+
+#portfolioAssistantModal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  background: rgba(17, 17, 17, 0.42);
+  backdrop-filter: blur(10px);
+}
+
+#portfolioAssistantModal.hidden {
+  display: none;
+}
+
+.portfolio-assistant-backdrop {
+  position: absolute;
+  inset: 0;
+}
+
+.portfolio-assistant-panel {
+  position: relative;
+  width: 100%;
+  max-height: min(80vh, 42rem);
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(209, 213, 219, 0.9);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 50px rgba(17, 17, 17, 0.12);
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.dark .portfolio-assistant-panel {
+  background: rgba(26, 26, 26, 0.96);
+  border-color: rgba(75, 85, 99, 0.9);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+
+.portfolio-assistant-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.95);
+}
+
+.dark .portfolio-assistant-header {
+  border-color: rgba(55, 65, 81, 0.9);
+}
+
+.portfolio-assistant-kicker {
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.dark .portfolio-assistant-kicker {
+  color: #9ca3af;
+}
+
+.portfolio-assistant-header h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.dark .portfolio-assistant-header h3 {
+  color: #f9fafb;
+}
+
+.portfolio-assistant-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  background: transparent;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dark .portfolio-assistant-close {
+  border-color: #374151;
+  color: #d1d5db;
+}
+
+.portfolio-assistant-close:hover,
+.portfolio-assistant-close:focus-visible {
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.dark .portfolio-assistant-close:hover,
+.dark .portfolio-assistant-close:focus-visible {
+  border-color: #6b7280;
+  color: #fff;
+}
+
+.portfolio-assistant-close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.portfolio-assistant-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem;
+  overflow-y: auto;
+  background: rgba(249, 250, 251, 0.6);
+}
+
+.dark .portfolio-assistant-messages {
+  background: rgba(17, 17, 17, 0.35);
+}
+
+.portfolio-message {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.portfolio-message-author {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+.portfolio-message-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 9999px;
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.58rem;
+  font-weight: 700;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.portfolio-message-icon svg {
+  width: 0.72rem;
+  height: 0.72rem;
+}
+
+.portfolio-message-user .portfolio-message-icon {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.portfolio-message-user .portfolio-message-author {
+  color: #374151;
+}
+
+.dark .portfolio-message-author {
+  color: #9ca3af;
+}
+
+.dark .portfolio-message-user .portfolio-message-author {
+  color: #d1d5db;
+}
+
+.dark .portfolio-message-user .portfolio-message-icon {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.portfolio-message-bubble {
+  display: inline-block;
+  max-width: 85%;
+  padding: 0.7rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  word-break: break-word;
+  white-space: pre-line;
+}
+
+.portfolio-message-assistant .portfolio-message-bubble {
+  align-self: flex-start;
+  color: #111827;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+}
+
+.dark .portfolio-message-assistant .portfolio-message-bubble {
+  color: #f3f4f6;
+  background: rgba(31, 41, 55, 0.9);
+  border-color: rgba(55, 65, 81, 0.9);
+}
+
+.portfolio-message-user {
+  align-items: flex-end;
+}
+
+.portfolio-message-user .portfolio-message-bubble {
+  align-self: flex-end;
+  color: #ffffff;
+  background: #111111;
+  border: 1px solid rgba(17, 17, 17, 0.9);
+}
+
+.dark .portfolio-message-user .portfolio-message-bubble {
+  background: rgba(255, 255, 255, 0.9);
+  color: #111111;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.portfolio-assistant-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.portfolio-chat-suggestion {
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.6);
+  color: #374151;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dark .portfolio-chat-suggestion {
+  border-color: #374151;
+  background: rgba(17, 17, 17, 0.5);
+  color: #e5e7eb;
+}
+
+.portfolio-chat-suggestion:hover,
+.portfolio-chat-suggestion:focus-visible {
+  border-color: #9ca3af;
+  color: #111827;
+}
+
+.dark .portfolio-chat-suggestion:hover,
+.dark .portfolio-chat-suggestion:focus-visible {
+  border-color: #6b7280;
+  color: #ffffff;
+}
+
+.portfolio-assistant-form {
+  border-top: 1px solid rgba(229, 231, 235, 0.95);
+  padding: 0.9rem 1rem 1rem;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.dark .portfolio-assistant-form {
+  background: rgba(17, 17, 17, 0.45);
+  border-color: rgba(55, 65, 81, 0.9);
+}
+
+.portfolio-assistant-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+#portfolioAssistantInput {
+  width: 100%;
+  min-height: 2.8rem;
+  max-height: 8rem;
+  resize: none;
+  overflow-y: hidden;
+  border: 1px solid #d1d5db;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #111827;
+  font: inherit;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  padding: 0.72rem 0.82rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, height 0.15s ease;
+}
+
+.dark #portfolioAssistantInput {
+  background: rgba(17, 17, 17, 0.65);
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+#portfolioAssistantInput:focus {
+  border-color: #111111;
+  box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.08);
+}
+
+.dark #portfolioAssistantInput:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
+}
+
+.portfolio-chat-launcher {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 60;
+  box-shadow: 0 16px 36px rgba(17, 17, 17, 0.18);
+}
+
+.portfolio-assistant-send {
+  flex-shrink: 0;
+  border: none;
+  border-radius: 0.8rem;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.dark .portfolio-assistant-send {
+  background: #ffffff;
+  color: #111111;
+}
+
+.portfolio-assistant-send:hover:not(:disabled),
+.portfolio-assistant-send:focus-visible:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.portfolio-assistant-send:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.portfolio-assistant-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.6rem;
+  color: #6b7280;
+  font-size: 0.7rem;
+}
+
+.dark .portfolio-assistant-meta {
+  color: #9ca3af;
+}
+
+#portfolioAssistantStatus {
+  flex: 1;
+  min-width: 0;
+}
+
+#portfolioAssistantCounter {
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  #portfolioAssistantModal {
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .portfolio-assistant-panel {
+    border-radius: 1.35rem;
+  }
+
+  .portfolio-chat-launcher {
+    right: 1.5rem;
+    bottom: 1.5rem;
+  }
 }
 
 /* =====================================================

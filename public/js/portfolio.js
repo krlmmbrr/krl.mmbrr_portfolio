@@ -168,58 +168,72 @@ function updatePortfolioAssistantCounter() {
 
 function getPortfolioAssistantSuggestions(message = '') {
   const text = (message || '').toLowerCase();
+  const profileQuestions = [
+    'Who is Karl Justijne?',
+    'What are Karl Justijne’s skills?',
+    'What tools does Karl Justijne use?',
+    'Where did Karl Justijne graduate?',
+    'What did Karl Justijne do during his internship?',
+    'What was Karl Justijne’s capstone project?',
+    'Is Karl Justijne available for freelance work?',
+    'How can I contact Karl Justijne?'
+  ];
 
-  if (text.includes('planty')) {
+  if (text.includes('contact') || text.includes('email') || text.includes('linkedin') || text.includes('social')) {
     return [
-      'What tools were used for Planty?',
-      'What other projects has Karl designed?',
-      'Tell me about FLOWZA.',
-      'Is Karl available for freelance work?'
+      'How can I contact Karl Justijne?',
+      'Can I see Karl Justijne’s LinkedIn?',
+      'What is Karl Justijne’s email?',
+      'Is Karl Justijne available for freelance work?'
     ];
   }
 
-  if (text.includes('flowza')) {
+  if (text.includes('skill') || text.includes('software') || text.includes('tool') || text.includes('figma') || text.includes('affinity')) {
     return [
-      'What does Karl specialize in?',
-      'Tell me about Nova AI.',
-      'What tools does Karl use?',
-      'Is Karl available for freelance work?'
+      'What are Karl Justijne’s skills?',
+      'What tools does Karl Justijne use?',
+      'Does Karl Justijne use Figma?',
+      'What does Karl Justijne specialize in?'
     ];
   }
 
-  if (text.includes('nova') || text.includes('nova ai')) {
+  if (text.includes('study') || text.includes('graduate') || text.includes('school') || text.includes('degree') || text.includes('college') || text.includes('education')) {
     return [
-      'What other projects has Karl designed?',
-      'What tools were used for Nova AI?',
-      'Tell me about FLOWZA.',
-      'Is Karl available for freelance work?'
+      'Where did Karl Justijne graduate?',
+      'What degree did Karl Justijne take?',
+      'Where did Karl Justijne study?',
+      'What schools did Karl Justijne attend?'
     ];
   }
 
-  if (text.includes('tool') || text.includes('figma') || text.includes('affinity') || text.includes('design system')) {
+  if (text.includes('intern') || text.includes('internship')) {
     return [
-      'What does Karl specialize in?',
-      'What projects has Karl worked on?',
-      'Tell me about his UI/UX experience.',
-      'Is Karl available for freelance work?'
+      'What did Karl Justijne do during his internship?',
+      'Where did Karl Justijne complete his internship?',
+      'What technologies did Karl Justijne use during his internship?',
+      'What was Karl Justijne’s capstone project?'
+    ];
+  }
+
+  if (text.includes('capstone') || text.includes('project')) {
+    return [
+      'What was Karl Justijne’s capstone project?',
+      'What was Karl Justijne’s role in the capstone?',
+      'What technologies did Karl Justijne use for his capstone?',
+      'What is Karl Justijne’s professional background?'
     ];
   }
 
   if (text.includes('freelance') || text.includes('hire') || text.includes('available') || text.includes('work')) {
     return [
-      'What projects has Karl worked on?',
-      'What tools does Karl use?',
-      'What does Karl specialize in?',
-      'How can I contact Karl?'
+      'Is Karl Justijne available for freelance work?',
+      'Can I hire Karl Justijne?',
+      'What kind of work does Karl Justijne do?',
+      'How can I contact Karl Justijne?'
     ];
   }
 
-  return [
-    'What projects has Karl worked on?',
-    'What tools does Karl use?',
-    'What does Karl specialize in?',
-    'Is Karl available for freelance work?'
-  ];
+  return profileQuestions;
 }
 
 function renderPortfolioSuggestions(message = '') {
@@ -262,7 +276,11 @@ function buildPortfolioMessageIcon(type) {
     return icon;
   }
 
-  icon.textContent = 'U';
+  icon.innerHTML = `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.5"></circle>
+      <path d="M5 18.5c1.8-2.8 4.2-4.2 7-4.2s5.2 1.4 7 4.2"></path>
+    </svg>`;
   return icon;
 }
 
@@ -280,7 +298,7 @@ function appendPortfolioAssistantMessage(message, sender) {
   author.appendChild(icon);
 
   const label = document.createElement('span');
-  label.textContent = sender === 'assistant' ? 'AI Assistant' : 'User';
+  label.textContent = sender === 'assistant' ? 'AI Assistant' : 'YOU';
   author.appendChild(label);
   item.appendChild(author);
 

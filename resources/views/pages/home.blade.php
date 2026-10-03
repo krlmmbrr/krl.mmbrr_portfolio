@@ -124,14 +124,14 @@
             <div class="space-y-6 sm:space-y-10">
               <div class="flex items-center mb-4 gap-4 sm:gap-6">
                 <div class="profile-image-wrap about-image h-32 w-32 shrink-0 rounded-full border-2 border-gray-200 bg-white shadow-sm sm:h-40 sm:w-40 dark:border-gray-500 dark:bg-ink cursor-pointer" tabindex="0" id="aboutImage">
-                  <img class="img-default" src="{{ asset('assets/kaneki.png') }}" onerror="this.onerror=null;this.src='{{ asset('assets/kaneki.png') }}'" alt="Portrait of Karl Justine Membrere" fetchpriority="high">
+                  <img class="img-default" src="{{ asset('assets/kaneki.png') }}" onerror="this.onerror=null;this.src='{{ asset('assets/kaneki.png') }}'" alt="Portrait of Karl Justijne R. Membrere" fetchpriority="high">
                   <img class="img-grad" src="{{ asset('assets/formal.png') }}" alt="" aria-hidden="true" fetchpriority="high">
                   <div class="pixel-canvas" aria-hidden="true"></div>
                 </div>
 
                 <div class="flex h-full flex-col justify-center gap-2.5 sm:gap-3">
                   <h1 class="flex items-center gap-2 text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    Karl Justine Membrere
+                    Karl Justijne R. Membrere
                     <svg viewBox="0 0 22 22" class="w-6 h-6 shrink-0 inline-block align-middle" title="Verified" aria-label="Verified">
                       <path fill="#1D9BF0" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.053-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.607-.274 1.264-.144 1.898.13.634.435 1.219.88 1.688.47.443 1.054.749 1.688.879.633.13 1.29.083 1.897-.14.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.607.224 1.264.272 1.897.14.634-.13 1.217-.436 1.687-.878.445-.47.75-1.055.88-1.688.13-.634.083-1.291-.14-1.897.586-.274 1.084-.705 1.438-1.246.354-.541.551-1.17.57-1.817Zm-11.343 3.9-3.5-3.5 1.238-1.238 2.262 2.262 5.315-5.315L15.5 8.35l-6.5 6.55Z"></path>
                     </svg>
@@ -186,7 +186,7 @@
                       <path d="M8 14h5"/>
                       <path d="M5 18.5V7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v6A2.5 2.5 0 0 1 16.5 16H9l-4 3v-1.5A2.5 2.5 0 0 1 5 18.5Z"/>
                     </svg>
-                    <span>Chat with Karl Justine</span>
+                    <span>Chat with Karl Justijne R. Membrere</span>
                   </button>
                 </div>
               </div>
@@ -1180,7 +1180,7 @@
           <div class="flex flex-col gap-2 items-start">
             <p class="text-sm italic text-gray-400 dark:text-gray-500 whitespace-nowrap">Turn Ideas Into Reality</p>
             <div class="flex flex-row flex-nowrap items-center gap-x-1.5 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
-              <span class="font-normal tracking-tight text-gray-900 dark:text-white whitespace-nowrap">Karl Justine Membrere</span>
+              <span class="font-normal tracking-tight text-gray-900 dark:text-white whitespace-nowrap">Karl Justijne R. Membrere</span>
               <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
               <span class="whitespace-nowrap">Don't Stop Learning</span>
               <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
@@ -1224,7 +1224,7 @@
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
           <div>
             <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-            <input type="text" id="name" name="name" required class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-1 focus:ring-ink dark:focus:ring-white outline-none transition-shadow" placeholder="Karl Justine Membrere">
+            <input type="text" id="name" name="name" required class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-1 focus:ring-ink dark:focus:ring-white outline-none transition-shadow" placeholder="Karl Justijne R. Membrere">
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name</label>
@@ -1275,7 +1275,7 @@
           <div class="portfolio-assistant-header">
             <div>
               <p class="portfolio-assistant-kicker">AI Assistant</p>
-              <h3 id="portfolioAssistantTitle">Chat with Karl Justine</h3>
+              <h3 id="portfolioAssistantTitle">Chat with Karl Justijne R. Membrere</h3>
             </div>
             <button type="button" id="closePortfolioAssistantBtn" class="portfolio-assistant-close" aria-label="Close chat">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1287,19 +1287,19 @@
           <div id="portfolioAssistantMessages" class="portfolio-assistant-messages" aria-live="polite">
             <div class="portfolio-message portfolio-message-assistant">
               <div class="portfolio-message-author"><span class="portfolio-message-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="6" width="10" height="12" rx="2.5"/><path d="M9.5 10h5M9.5 14h2.5"/><path d="M7 9.5 5 8.5v7l2-1"/><path d="M17 9.5 19 8.5v7l-2-1"/></svg></span><span>AI Assistant</span></div>
-              <div class="portfolio-message-bubble">Hi! I'm Karl Justine. Ask me about my projects, skills, experience, services, or availability.</div>
+              <div class="portfolio-message-bubble">Hi! I'm Karl Justijne. Ask me about my background, skills, experience, education, or freelance availability.</div>
             </div>
             <div class="portfolio-assistant-suggestions">
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What projects has Karl Justine worked on?">What projects has Karl Justine worked on?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What services does Karl Justine offer?">What services does Karl Justine offer?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What tools does Karl Justine use?">What tools does Karl Justine use?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Is Karl Justine available for work?">Is Karl Justine available for work?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Who is Karl Justijne?">Who is Karl Justijne?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What are Karl Justijne’s skills?">What are Karl Justijne’s skills?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What tools does Karl Justijne use?">What tools does Karl Justijne use?</button>
+              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Where did Karl Justijne graduate?">Where did Karl Justijne graduate?</button>
             </div>
           </div>
 
           <form id="portfolioAssistantForm" class="portfolio-assistant-form">
             <div class="portfolio-assistant-input-row">
-              <textarea id="portfolioAssistantInput" rows="1" maxlength="500" placeholder="Ask about Karl Justine's projects, skills, or availability..." aria-label="Ask the portfolio assistant"></textarea>
+              <textarea id="portfolioAssistantInput" rows="1" maxlength="500" placeholder="Ask about Karl Justijne’s background, skills, or availability..." aria-label="Ask the portfolio assistant"></textarea>
               <button type="submit" id="portfolioAssistantSend" class="portfolio-assistant-send">Send</button>
             </div>
             <div class="portfolio-assistant-meta">

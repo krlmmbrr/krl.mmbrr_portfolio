@@ -36,7 +36,7 @@
         <div class="flex items-center gap-3 sm:gap-5">
           <!-- Desktop nav links — hidden on mobile, burger menu used instead -->
           <div class="hidden sm:flex items-center gap-3 sm:gap-4">
-            <!-- Nav order: Projects → Experience → FAQs → Gallery → Contact -->
+            <!-- Nav order: Projects → Experience → FAQs → Contact -->
             <button onclick="switchView('projects')" class="nav-link text-xs sm:text-sm font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" data-nav="projects">
               Projects
             </button>
@@ -45,9 +45,6 @@
             </button>
             <button onclick="switchView('faq')" class="nav-link text-xs sm:text-sm font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" data-nav="faq">
               FAQs
-            </button>
-            <button onclick="switchView('gallery')" class="nav-link text-xs sm:text-sm font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" data-nav="gallery">
-              Gallery
             </button>
             <button onclick="navigateToContact()" class="nav-link text-xs sm:text-sm font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
               Contact
@@ -106,7 +103,6 @@
         <button onclick="switchView('projects'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="projects">Projects</button>
         <button onclick="switchView('experience'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="experience">Experience</button>
         <button onclick="switchView('faq'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="faq">FAQs</button>
-        <button onclick="switchView('gallery'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="gallery">Gallery</button>
         <button onclick="navigateToContact(); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3">Contact</button>
       </div>
     </div>
@@ -120,18 +116,25 @@
         <main class="mx-auto flex w-full max-w-3xl flex-col gap-14 sm:gap-16 px-4 sm:px-6 pb-10 sm:pb-16">
 
           <!-- Hero Section -->
-          <section class="flex flex-col justify-center pt-6 pb-8 sm:pt-16 sm:pb-8">
+          <section id="section-profile" class="flex flex-col justify-center pt-6 pb-8 sm:pt-16 sm:pb-8">
+            <div class="profile-work-status mb-5" aria-label="Available for work and open for freelance">
+              <span class="profile-work-status-dot" aria-hidden="true"></span>
+              <span class="profile-work-status-labels" aria-hidden="true">
+                <span class="profile-work-status-label profile-work-status-available">Available for Work</span>
+                <span class="profile-work-status-label profile-work-status-freelance">Open for Freelance</span>
+              </span>
+            </div>
             <div class="space-y-6 sm:space-y-10">
               <div class="flex items-center mb-4 gap-4 sm:gap-6">
                 <div class="profile-image-wrap about-image h-32 w-32 shrink-0 rounded-full border-2 border-gray-200 bg-white shadow-sm sm:h-40 sm:w-40 dark:border-gray-500 dark:bg-ink cursor-pointer" tabindex="0" id="aboutImage">
-                  <img class="img-default" src="{{ asset('assets/kaneki.png') }}" onerror="this.onerror=null;this.src='{{ asset('assets/kaneki.png') }}'" alt="Portrait of Karl Justijne R. Membrere" fetchpriority="high">
+                  <img class="img-default" src="{{ asset('assets/kaneki.png') }}" onerror="this.onerror=null;this.src='{{ asset('assets/kaneki.png') }}'" alt="Portrait of Karl Justine R. Membrere" fetchpriority="high">
                   <img class="img-grad" src="{{ asset('assets/formal.png') }}" alt="" aria-hidden="true" fetchpriority="high">
                   <div class="pixel-canvas" aria-hidden="true"></div>
                 </div>
 
                 <div class="flex h-full flex-col justify-center gap-2.5 sm:gap-3">
                   <h1 class="flex items-center gap-2 text-xl sm:text-2xl md:text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                    Karl Justijne R. Membrere
+                    Karl Justine R. Membrere
                     <svg viewBox="0 0 22 22" class="w-6 h-6 shrink-0 inline-block align-middle" title="Verified" aria-label="Verified">
                       <path fill="#1D9BF0" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.053-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.607-.274 1.264-.144 1.898.13.634.435 1.219.88 1.688.47.443 1.054.749 1.688.879.633.13 1.29.083 1.897-.14.274.586.705 1.084 1.246 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.607.224 1.264.272 1.897.14.634-.13 1.217-.436 1.687-.878.445-.47.75-1.055.88-1.688.13-.634.083-1.291-.14-1.897.586-.274 1.084-.705 1.438-1.246.354-.541.551-1.17.57-1.817Zm-11.343 3.9-3.5-3.5 1.238-1.238 2.262 2.262 5.315-5.315L15.5 8.35l-6.5 6.55Z"></path>
                     </svg>
@@ -156,6 +159,7 @@
                       <i class="fas fa-envelope text-xl text-gray-700 dark:text-gray-300 hover:text-[#EA4335] dark:hover:text-[#EA4335]"></i>
                     </a>
                   </div>
+
                 </div>
               </div>
 
@@ -186,7 +190,7 @@
                       <path d="M8 14h5"/>
                       <path d="M5 18.5V7.5A2.5 2.5 0 0 1 7.5 5h9A2.5 2.5 0 0 1 19 7.5v6A2.5 2.5 0 0 1 16.5 16H9l-4 3v-1.5A2.5 2.5 0 0 1 5 18.5Z"/>
                     </svg>
-                    <span>Chat with Karl Justijne R. Membrere</span>
+                    <span>Chat with Karl Justine</span>
                   </button>
                 </div>
               </div>
@@ -637,10 +641,9 @@
             <div class="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
               <div class="space-y-4">
                 <p class="text-gray-500 dark:text-gray-400 text-sm sm:text-base leading-relaxed max-w-xl">
-                  When I'm not designing, I'm usually playing games, exploring new places, or learning something new. It keeps me inspired, curious, and creative.
+                  When I'm not designing, I enjoy exploring new places or learning something new. It keeps me inspired, curious, and creative.
                 </p>
                 <div class="flex flex-wrap gap-2.5">
-                  <span class="inline-flex items-center rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-ink px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-200">Playing Games</span>
                   <span class="inline-flex items-center rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-ink px-3 py-1 text-xs font-medium text-gray-700 dark:text-gray-200">Going Out / Exploring</span>
                 </div>
               </div>
@@ -727,7 +730,7 @@
 
           <div class="view-header">
             <h1 class="text-3xl sm:text-4xl font-light tracking-tight text-gray-900 dark:text-white">Experience</h1>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Where I Learned and What I Built</p>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Professional roles, internships, and project work that have shaped my skills throughout my career and project journey.</p>
           </div>
 
           <div class="exp-timeline">
@@ -883,7 +886,7 @@
 
           <div class="view-header">
             <h1 class="text-3xl sm:text-4xl font-light tracking-tight text-gray-900 dark:text-white">Projects</h1>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">A selection of interfaces, dashboards, and experiences I've designed.</p>
+            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">Personal design projects featuring interfaces and experiences I’ve designed.</p>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
@@ -1024,50 +1027,6 @@
       </div>
 
       <!-- ============================================== -->
-      <!-- ============ GALLERY VIEW =================== -->
-      <!-- ============================================== -->
-      <div id="view-gallery" class="view">
-        <main class="mx-auto flex w-full max-w-3xl flex-col gap-10 sm:gap-12 px-4 sm:px-6 pt-8 sm:pt-12 pb-10 sm:pb-16">
-
-          <button onclick="switchView('home')" class="group inline-flex w-fit items-center gap-2 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors">
-            <svg class="h-4 w-4 transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 18l-6-6 6-6"/>
-            </svg>
-            <span>Back to Home</span>
-          </button>
-
-          <div>
-            <h1 class="text-3xl sm:text-4xl font-light tracking-tight text-gray-900 dark:text-white">Gallery</h1>
-            <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">A collection of visuals, explorations, and behind-the-scenes moments.</p>
-          </div>
-
-          <div class="columns-2 sm:columns-3 gap-3 sm:gap-4">
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery1.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery2.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery3.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery4.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery5.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery6.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-            <div class="gallery-item group relative mb-3 sm:mb-4 break-inside-avoid rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-surface-dark shadow-sm">
-              <img src="{{ asset('assets/gallery7.png') }}" alt="Gallery Pictures" class="block w-full h-auto" loading="lazy">
-            </div>
-          </div>
-        </main>
-      </div>
-
-      <!-- ============================================== -->
       <!-- ======== DESIGN STACK VIEW =================== -->
       <!-- ============================================== -->
       <div id="view-design-stack" class="view">
@@ -1180,7 +1139,7 @@
           <div class="flex flex-col gap-2 items-start">
             <p class="text-sm italic text-gray-400 dark:text-gray-500 whitespace-nowrap">Turn Ideas Into Reality</p>
             <div class="flex flex-row flex-nowrap items-center gap-x-1.5 gap-y-1 text-xs text-gray-500 dark:text-gray-400">
-              <span class="font-normal tracking-tight text-gray-900 dark:text-white whitespace-nowrap">Karl Justijne R. Membrere</span>
+              <span class="font-normal tracking-tight text-gray-900 dark:text-white whitespace-nowrap">Karl Justine R. Membrere</span>
               <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
               <span class="whitespace-nowrap">Don't Stop Learning</span>
               <span class="text-gray-300 dark:text-gray-600 select-none">/</span>
@@ -1191,19 +1150,6 @@
                 </svg>
                 San Manuel, Pangasinan, Philippines
               </span>
-            </div>
-          </div>
-
-          <!-- Right side: Status badges -->
-          <div class="flex flex-col items-end gap-2">
-            <div class="flex flex-row items-center gap-2 sm:gap-3 flex-wrap justify-end">
-              <p class="rounded-full border border-dashed border-gray-300 px-3 py-1 text-xs font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400 inline-flex items-center gap-1.5 whitespace-nowrap">
-                <span class="status-dot"></span>
-                Available for Work
-              </p>
-              <p class="rounded-full border border-dashed border-gray-300 px-3 py-1 text-xs font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400 whitespace-nowrap">
-                Open for Freelance
-              </p>
             </div>
           </div>
 
@@ -1224,7 +1170,7 @@
           <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none;">
           <div>
             <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Full Name</label>
-            <input type="text" id="name" name="name" required class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-1 focus:ring-ink dark:focus:ring-white outline-none transition-shadow" placeholder="Karl Justijne R. Membrere">
+            <input type="text" id="name" name="name" required class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-surface-dark px-3 py-2 text-sm text-gray-900 dark:text-white focus:ring-1 focus:ring-ink dark:focus:ring-white outline-none transition-shadow" placeholder="Karl Justine R. Membrere">
           </div>
           <div>
             <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1">Company Name</label>
@@ -1273,12 +1219,18 @@
       <div class="portfolio-assistant-panel-wrap">
         <div id="portfolioAssistantPanel" class="portfolio-assistant-panel" role="dialog" aria-modal="true" aria-labelledby="portfolioAssistantTitle">
           <div class="portfolio-assistant-header">
-            <div>
-              <p class="portfolio-assistant-kicker">AI Assistant</p>
-              <h3 id="portfolioAssistantTitle">Chat with Karl Justijne R. Membrere</h3>
+            <div class="portfolio-assistant-header-main">
+              <div class="portfolio-assistant-avatar" aria-hidden="true">
+                <img src="{{ asset('assets/kaneki.png') }}" alt="Karl Justine" />
+                <span class="portfolio-assistant-online"></span>
+              </div>
+              <div>
+                <h3 id="portfolioAssistantTitle">Chat with Karl Justine</h3>
+                <p class="portfolio-assistant-kicker">ONLINE</p>
+              </div>
             </div>
             <button type="button" id="closePortfolioAssistantBtn" class="portfolio-assistant-close" aria-label="Close chat">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M6 6L18 18M6 18L18 6"/>
               </svg>
             </button>
@@ -1286,24 +1238,26 @@
 
           <div id="portfolioAssistantMessages" class="portfolio-assistant-messages" aria-live="polite">
             <div class="portfolio-message portfolio-message-assistant">
-              <div class="portfolio-message-author"><span class="portfolio-message-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="6" width="10" height="12" rx="2.5"/><path d="M9.5 10h5M9.5 14h2.5"/><path d="M7 9.5 5 8.5v7l2-1"/><path d="M17 9.5 19 8.5v7l-2-1"/></svg></span><span>AI Assistant</span></div>
-              <div class="portfolio-message-bubble">Hi! I'm Karl Justijne. Ask me about my background, skills, experience, education, or freelance availability.</div>
-            </div>
-            <div class="portfolio-assistant-suggestions">
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Who is Karl Justijne?">Who is Karl Justijne?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What are Karl Justijne’s skills?">What are Karl Justijne’s skills?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="What tools does Karl Justijne use?">What tools does Karl Justijne use?</button>
-              <button type="button" class="portfolio-chat-suggestion" data-portfolio-question="Where did Karl Justijne graduate?">Where did Karl Justijne graduate?</button>
+              <div class="portfolio-message-author portfolio-message-author-assistant">
+                <img class="portfolio-message-avatar" src="{{ asset('assets/kaneki.png') }}" alt="Karl Justine" />
+              </div>
+              <div class="portfolio-message-content">
+                <div class="portfolio-message-bubble">Hi! I’m Karl Justine. Ask me about my background, skills, projects, services, or freelance availability.</div>
+              </div>
             </div>
           </div>
 
           <form id="portfolioAssistantForm" class="portfolio-assistant-form">
             <div class="portfolio-assistant-input-row">
-              <textarea id="portfolioAssistantInput" rows="1" maxlength="500" placeholder="Ask about Karl Justijne’s background, skills, or availability..." aria-label="Ask the portfolio assistant"></textarea>
-              <button type="submit" id="portfolioAssistantSend" class="portfolio-assistant-send">Send</button>
+              <textarea id="portfolioAssistantInput" rows="1" maxlength="500" placeholder="Type a message" aria-label="Type a message"></textarea>
+              <button type="submit" id="portfolioAssistantSend" class="portfolio-assistant-send" aria-label="Send message">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21 3L10 14"/>
+                  <path d="M21 3L14 21L10 14L3 10L21 3Z"/>
+                </svg>
+              </button>
             </div>
             <div class="portfolio-assistant-meta">
-              <span id="portfolioAssistantStatus">Portfolio-focused questions only</span>
               <span id="portfolioAssistantCounter">0/500</span>
             </div>
           </form>

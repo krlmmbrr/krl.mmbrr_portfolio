@@ -65,13 +65,23 @@ function deactivateScrollLock() {
 activateScrollLock();
 
 const homeMain = document.querySelector('#view-home > main');
-const educationSection = document.getElementById('section-education');
-const designStackSection = document.getElementById('section-design-stack');
+const profileSection = document.getElementById('section-profile');
 const featuredSection = document.getElementById('section-featured');
+const designStackSection = document.getElementById('section-design-stack');
+const educationSection = document.getElementById('section-education');
 
-if (homeMain && educationSection && designStackSection && featuredSection) {
-  designStackSection.before(educationSection);
-  designStackSection.after(featuredSection);
+if (homeMain && profileSection && featuredSection && designStackSection && educationSection) {
+  if (profileSection !== featuredSection.previousElementSibling) {
+    homeMain.insertBefore(profileSection, featuredSection);
+  }
+
+  if (featuredSection !== designStackSection.previousElementSibling) {
+    homeMain.insertBefore(featuredSection, designStackSection);
+  }
+
+  if (designStackSection !== educationSection.previousElementSibling) {
+    homeMain.insertBefore(designStackSection, educationSection);
+  }
 }
 
 /* =====================================================
@@ -107,6 +117,7 @@ if (callModalElement) {
 }
 
 const PORTFOLIO_ASSISTANT_LIMIT = 500;
+const PORTFOLIO_ASSISTANT_INTRO_RESPONSE = "I can help with Karl Justine's professional background, skills, experience, education, and contact information.";
 let portfolioAssistantRequestInFlight = false;
 
 function setPortfolioAssistantScrollLock(isOpen) {
@@ -128,7 +139,6 @@ function openPortfolioAssistant() {
     window.setTimeout(() => {
       input.focus();
       updatePortfolioAssistantInputHeight();
-      renderPortfolioSuggestions();
       const end = input.value.length;
       try { input.setSelectionRange(end, end); } catch (error) {}
     }, 80);
@@ -166,122 +176,40 @@ function updatePortfolioAssistantCounter() {
   counter.textContent = `${input.value.length}/${PORTFOLIO_ASSISTANT_LIMIT}`;
 }
 
-function getPortfolioAssistantSuggestions(message = '') {
-  const text = (message || '').toLowerCase();
-  const profileQuestions = [
-    'Who is Karl Justijne?',
-    'What are Karl Justijne’s skills?',
-    'What tools does Karl Justijne use?',
-    'Where did Karl Justijne graduate?',
-    'What did Karl Justijne do during his internship?',
-    'What was Karl Justijne’s capstone project?',
-    'Is Karl Justijne available for freelance work?',
-    'How can I contact Karl Justijne?'
-  ];
-
-  if (text.includes('contact') || text.includes('email') || text.includes('linkedin') || text.includes('social')) {
-    return [
-      'How can I contact Karl Justijne?',
-      'Can I see Karl Justijne’s LinkedIn?',
-      'What is Karl Justijne’s email?',
-      'Is Karl Justijne available for freelance work?'
-    ];
-  }
-
-  if (text.includes('skill') || text.includes('software') || text.includes('tool') || text.includes('figma') || text.includes('affinity')) {
-    return [
-      'What are Karl Justijne’s skills?',
-      'What tools does Karl Justijne use?',
-      'Does Karl Justijne use Figma?',
-      'What does Karl Justijne specialize in?'
-    ];
-  }
-
-  if (text.includes('study') || text.includes('graduate') || text.includes('school') || text.includes('degree') || text.includes('college') || text.includes('education')) {
-    return [
-      'Where did Karl Justijne graduate?',
-      'What degree did Karl Justijne take?',
-      'Where did Karl Justijne study?',
-      'What schools did Karl Justijne attend?'
-    ];
-  }
-
-  if (text.includes('intern') || text.includes('internship')) {
-    return [
-      'What did Karl Justijne do during his internship?',
-      'Where did Karl Justijne complete his internship?',
-      'What technologies did Karl Justijne use during his internship?',
-      'What was Karl Justijne’s capstone project?'
-    ];
-  }
-
-  if (text.includes('capstone') || text.includes('project')) {
-    return [
-      'What was Karl Justijne’s capstone project?',
-      'What was Karl Justijne’s role in the capstone?',
-      'What technologies did Karl Justijne use for his capstone?',
-      'What is Karl Justijne’s professional background?'
-    ];
-  }
-
-  if (text.includes('freelance') || text.includes('hire') || text.includes('available') || text.includes('work')) {
-    return [
-      'Is Karl Justijne available for freelance work?',
-      'Can I hire Karl Justijne?',
-      'What kind of work does Karl Justijne do?',
-      'How can I contact Karl Justijne?'
-    ];
-  }
-
-  return profileQuestions;
+function getPortfolioAssistantAvatarSource() {
+  const headerAvatar = document.querySelector('.portfolio-assistant-avatar img');
+  return headerAvatar ? headerAvatar.src : `${window.portfolioAssetBase}kaneki.png`;
 }
 
-function renderPortfolioSuggestions(message = '') {
-  const messages = getPortfolioAssistantMessages();
-  if (!messages) return;
+function isPortfolioAssistantIntroResponse(message) {
+  return String(message)
+    .trim()
+    .replace(/[’‘]/g, "'")
+    .replace(/\*\*(.*?)\*\*/g, '$1') === PORTFOLIO_ASSISTANT_INTRO_RESPONSE;
+}
 
-  let container = messages.querySelector('.portfolio-assistant-suggestions');
-  if (!container) {
-    container = document.createElement('div');
-    container.className = 'portfolio-assistant-suggestions';
-    messages.appendChild(container);
-  }
+function appendPortfolioAssistantSuggestions(content) {
+  const suggestions = [
+    { label: 'Professional Background', question: 'Tell me about Karl Justine’s professional background.' },
+    { label: 'Skills', question: 'What are Karl Justine’s skills?' },
+    { label: 'Experience', question: 'What professional and project experience does Karl Justine have?' },
+    { label: 'Education', question: 'What is Karl Justine’s education?' },
+    { label: 'Contact Information', question: 'How can I contact Karl Justine?' },
+    { label: 'Projects', question: 'What projects has Karl Justine worked on?' }
+  ];
+  const container = document.createElement('div');
+  container.className = 'portfolio-assistant-suggestions';
 
-  const suggestions = getPortfolioAssistantSuggestions(message);
-  container.innerHTML = '';
-
-  suggestions.forEach((question) => {
+  suggestions.forEach(({ label, question }) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'portfolio-chat-suggestion';
-    button.setAttribute('data-portfolio-question', question);
-    button.textContent = question;
+    button.dataset.portfolioQuestion = question;
+    button.textContent = `- ${label}`;
     container.appendChild(button);
   });
-}
 
-function buildPortfolioMessageIcon(type) {
-  const icon = document.createElement('span');
-  icon.className = 'portfolio-message-icon';
-  icon.setAttribute('aria-hidden', 'true');
-
-  if (type === 'assistant') {
-    icon.innerHTML = `
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <rect x="7" y="6" width="10" height="12" rx="2.5"></rect>
-        <path d="M9.5 10h5M9.5 14h2.5"></path>
-        <path d="M7 9.5 5 8.5v7l2-1"></path>
-        <path d="M17 9.5 19 8.5v7l-2-1"></path>
-      </svg>`;
-    return icon;
-  }
-
-  icon.innerHTML = `
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="12" cy="8" r="3.5"></circle>
-      <path d="M5 18.5c1.8-2.8 4.2-4.2 7-4.2s5.2 1.4 7 4.2"></path>
-    </svg>`;
-  return icon;
+  content.appendChild(container);
 }
 
 function appendPortfolioAssistantMessage(message, sender) {
@@ -291,24 +219,80 @@ function appendPortfolioAssistantMessage(message, sender) {
   const item = document.createElement('div');
   item.className = `portfolio-message portfolio-message-${sender}`;
 
-  const author = document.createElement('div');
-  author.className = 'portfolio-message-author';
-
-  const icon = buildPortfolioMessageIcon(sender);
-  author.appendChild(icon);
-
-  const label = document.createElement('span');
-  label.textContent = sender === 'assistant' ? 'AI Assistant' : 'YOU';
-  author.appendChild(label);
-  item.appendChild(author);
-
   const bubble = document.createElement('div');
   bubble.className = 'portfolio-message-bubble';
-  bubble.textContent = message;
-  item.appendChild(bubble);
+  const plainMessage = String(message).replace(/\*\*(.*?)\*\*/g, '$1');
+  bubble.textContent = plainMessage;
+  if (sender === 'assistant') {
+    const author = document.createElement('div');
+    author.className = 'portfolio-message-author portfolio-message-author-assistant';
+
+    const avatar = document.createElement('img');
+    avatar.className = 'portfolio-message-avatar';
+    avatar.src = getPortfolioAssistantAvatarSource();
+    avatar.alt = 'Karl Justine';
+    author.appendChild(avatar);
+    item.appendChild(author);
+
+    const content = document.createElement('div');
+    content.className = 'portfolio-message-content';
+    content.appendChild(bubble);
+    if (isPortfolioAssistantIntroResponse(plainMessage)) {
+      appendPortfolioAssistantSuggestions(content);
+    }
+    item.appendChild(content);
+  } else {
+    item.appendChild(bubble);
+  }
 
   wrapper.appendChild(item);
   wrapper.scrollTop = wrapper.scrollHeight;
+}
+
+function appendPortfolioAssistantTypingIndicator() {
+  const wrapper = getPortfolioAssistantMessages();
+  if (!wrapper) return;
+
+  const existing = wrapper.querySelector('.portfolio-message-typing');
+  if (existing) return;
+
+  const item = document.createElement('div');
+  item.className = 'portfolio-message portfolio-message-assistant portfolio-message-typing';
+
+  const author = document.createElement('div');
+  author.className = 'portfolio-message-author portfolio-message-author-assistant';
+
+  const avatar = document.createElement('img');
+  avatar.className = 'portfolio-message-avatar';
+  avatar.src = getPortfolioAssistantAvatarSource();
+  avatar.alt = 'Karl Justine';
+  author.appendChild(avatar);
+  item.appendChild(author);
+
+  const content = document.createElement('div');
+  content.className = 'portfolio-message-content';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'portfolio-message-bubble portfolio-message-typing-bubble';
+  bubble.setAttribute('aria-label', 'Chatbot is typing');
+
+  const dots = document.createElement('span');
+  dots.className = 'portfolio-typing-dots';
+  dots.innerHTML = '<span></span><span></span><span></span>';
+  bubble.appendChild(dots);
+  content.appendChild(bubble);
+  item.appendChild(content);
+
+  wrapper.appendChild(item);
+  wrapper.scrollTop = wrapper.scrollHeight;
+}
+
+function removePortfolioAssistantTypingIndicator() {
+  const wrapper = getPortfolioAssistantMessages();
+  if (!wrapper) return;
+
+  const typing = wrapper.querySelector('.portfolio-message-typing');
+  if (typing) typing.remove();
 }
 
 function updatePortfolioAssistantInputHeight() {
@@ -324,27 +308,28 @@ function updatePortfolioAssistantInputHeight() {
 
 function setPortfolioAssistantBusy(isBusy, message) {
   const button = document.getElementById('portfolioAssistantSend');
-  const input = getPortfolioAssistantInput();
   const status = document.getElementById('portfolioAssistantStatus');
 
   if (button) {
     button.disabled = isBusy;
-    button.textContent = isBusy ? 'Sending...' : 'Send';
-  }
-
-  if (input) {
-    input.disabled = isBusy;
+    button.setAttribute('aria-label', isBusy ? 'Sending message' : 'Send message');
   }
 
   if (status) {
-    status.textContent = message || (isBusy ? 'Thinking...' : 'Portfolio-focused questions only');
+    status.textContent = message || (isBusy ? 'Thinking…' : 'Online');
   }
+}
+
+function waitForPortfolioAssistantThinking(startedAt) {
+  const elapsed = Date.now() - startedAt;
+  const remaining = Math.max(0, 2000 - elapsed);
+  return new Promise((resolve) => window.setTimeout(resolve, remaining));
 }
 
 function clearPortfolioAssistantStatus() {
   const status = document.getElementById('portfolioAssistantStatus');
   if (status) {
-    status.textContent = 'Portfolio-focused questions only';
+    status.textContent = 'Online';
   }
 }
 
@@ -373,7 +358,9 @@ async function submitPortfolioAssistantMessage(rawMessage) {
   appendPortfolioAssistantMessage(trimmed, 'user');
   if (input) input.value = '';
   updatePortfolioAssistantCounter();
-  setPortfolioAssistantBusy(true, 'Thinking...');
+  const thinkingStartedAt = Date.now();
+  appendPortfolioAssistantTypingIndicator();
+  setPortfolioAssistantBusy(true, 'Thinking…');
 
   try {
     const response = await fetch('/api/portfolio-chat', {
@@ -392,7 +379,7 @@ async function submitPortfolioAssistantMessage(rawMessage) {
     if (response.status === 429) {
       reply = "You're sending messages a little too quickly. Please try again in a moment.";
     } else if (response.status === 503) {
-      reply = 'The AI assistant is temporarily unavailable. Please try again later.';
+      reply = 'The assistant is temporarily unavailable. Please try again later.';
     } else if (!response.ok) {
       if (response.status >= 500) {
         reply = 'Something went wrong while contacting the assistant. Please try again.';
@@ -401,14 +388,16 @@ async function submitPortfolioAssistantMessage(rawMessage) {
       }
     }
 
+    await waitForPortfolioAssistantThinking(thinkingStartedAt);
+    removePortfolioAssistantTypingIndicator();
     appendPortfolioAssistantMessage(reply, 'assistant');
-    renderPortfolioSuggestions(trimmed);
   } catch (error) {
+    await waitForPortfolioAssistantThinking(thinkingStartedAt);
+    removePortfolioAssistantTypingIndicator();
     appendPortfolioAssistantMessage('Something went wrong while contacting the assistant. Please try again.', 'assistant');
-    renderPortfolioSuggestions(trimmed);
   } finally {
     portfolioAssistantRequestInFlight = false;
-    setPortfolioAssistantBusy(false, 'Portfolio-focused questions only');
+    setPortfolioAssistantBusy(false, 'Online');
     const inputField = getPortfolioAssistantInput();
     if (inputField) inputField.focus();
   }
@@ -437,6 +426,22 @@ function initPortfolioAssistantChat() {
     });
   }
 
+  const messages = getPortfolioAssistantMessages();
+  if (messages) {
+    const initialAssistantContent = messages.querySelector('.portfolio-message-assistant .portfolio-message-content');
+    if (initialAssistantContent && !initialAssistantContent.querySelector('.portfolio-assistant-suggestions')) {
+      appendPortfolioAssistantSuggestions(initialAssistantContent);
+    }
+
+    messages.addEventListener('click', (event) => {
+      if (!(event.target instanceof Element)) return;
+      const suggestion = event.target.closest('.portfolio-chat-suggestion');
+      if (suggestion) {
+        submitPortfolioAssistantMessage(suggestion.dataset.portfolioQuestion || '');
+      }
+    });
+  }
+
   if (input) {
     input.addEventListener('input', () => {
       updatePortfolioAssistantCounter();
@@ -457,8 +462,6 @@ function initPortfolioAssistantChat() {
     updatePortfolioAssistantInputHeight();
   }
 
-  renderPortfolioSuggestions();
-
   if (form) {
     form.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -466,22 +469,6 @@ function initPortfolioAssistantChat() {
       submitPortfolioAssistantMessage(message);
     });
   }
-
-  document.addEventListener('click', (event) => {
-    const suggestion = event.target.closest('.portfolio-chat-suggestion');
-    if (!suggestion) return;
-
-    event.preventDefault();
-    const question = suggestion.getAttribute('data-portfolio-question') || suggestion.textContent.trim();
-    if (!question) return;
-    openPortfolioAssistant();
-    const inputField = getPortfolioAssistantInput();
-    if (inputField) {
-      inputField.value = question;
-      updatePortfolioAssistantCounter();
-      submitPortfolioAssistantMessage(question);
-    }
-  });
 }
 
 document.addEventListener('keydown', (e) => {
@@ -621,35 +608,10 @@ function onDomReady() {
     });
   }
 
-  const galleryItems = Array.from(document.querySelectorAll('#view-gallery .gallery-item'));
-  const galleryLightboxItems = galleryItems.map(item => {
-    const image = item.querySelector('img');
-    return image ? { src: image.src, alt: image.alt || '' } : null;
-  }).filter(Boolean);
-
-  galleryItems.forEach((item, index) => {
-    const image = item.querySelector('img');
-    if (!image) return;
-    item.setAttribute('tabindex', '0');
-    item.setAttribute('role', 'button');
-    item.setAttribute('aria-label', 'Open ' + (image.alt || 'Gallery image'));
-    const openGalleryImage = () => openImageLightbox(image.src, image.alt, galleryLightboxItems, index);
-    item.addEventListener('click', openGalleryImage);
-    item.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        openGalleryImage();
-      }
-    });
-  });
-
   initFaqAccordion();
   initFeaturedProjects();
   initMessageSuggestions();
   initPortfolioAssistantChat();
-
-  completeInitialSkeleton();
-  window.setTimeout(completeInitialSkeleton, 3000);
 }
 
 if (document.readyState === 'loading') {

@@ -188,15 +188,20 @@ function isPortfolioAssistantIntroResponse(message) {
     .replace(/\*\*(.*?)\*\*/g, '$1') === PORTFOLIO_ASSISTANT_INTRO_RESPONSE;
 }
 
-function appendPortfolioAssistantSuggestions(content) {
-  const suggestions = [
+function isPortfolioAssistantGreetingResponse(message) {
+  const response = String(message).trim();
+  return /^(?:hi|hello|hey|good morning|good afternoon|good evening)[!,]/i.test(response)
+    && /(?:project in mind|design support for a project|design services, experience, or availability|planning a project|looking for a ui\/ux designer for your team|how to get started on a project)/i.test(response);
+}
+
+function appendPortfolioAssistantSuggestions(content, suggestions = [
     { label: 'Professional Background', question: 'Tell me about Karl Justine’s professional background.' },
     { label: 'Skills', question: 'What are Karl Justine’s skills?' },
     { label: 'Experience', question: 'What professional and project experience does Karl Justine have?' },
     { label: 'Education', question: 'What is Karl Justine’s education?' },
     { label: 'Contact Information', question: 'How can I contact Karl Justine?' },
     { label: 'Projects', question: 'What projects has Karl Justine worked on?' }
-  ];
+  ]) {
   const container = document.createElement('div');
   container.className = 'portfolio-assistant-suggestions';
 
@@ -239,6 +244,15 @@ function appendPortfolioAssistantMessage(message, sender) {
     content.appendChild(bubble);
     if (isPortfolioAssistantIntroResponse(plainMessage)) {
       appendPortfolioAssistantSuggestions(content);
+    } else if (isPortfolioAssistantGreetingResponse(plainMessage)) {
+      appendPortfolioAssistantSuggestions(content, [
+        { label: 'What services do you offer?', question: 'What services does Karl Justine offer?' },
+        { label: 'Freelance availability', question: 'Is Karl Justine available for freelance projects?' },
+        { label: 'Professional experience', question: 'What professional experience does Karl Justine have?' },
+        { label: 'Projects', question: 'What projects has Karl Justine worked on?' },
+        { label: 'Design process', question: 'How does Karl Justine’s design process work?' },
+        { label: 'Getting started', question: 'How can we get started on a project with Karl Justine?' }
+      ]);
     }
     item.appendChild(content);
   } else {

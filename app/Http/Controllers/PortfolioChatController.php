@@ -44,6 +44,10 @@ Portfolio: https://karljustinemembrere-portfolio.vercel.app/
 Career objective:
 Karl Justine is a detail-oriented UI/UX Designer and fresh graduate passionate about transforming complex problems into clean, intuitive, and accessible digital experiences. He is skilled in Figma, wireframing, and design systems, and he aims to contribute user-focused solutions and modern interface designs to a collaborative team.
 
+Availability:
+- Karl Justine is currently available for full-time work.
+- Karl Justine is also open for freelance projects.
+
 Skills and tools:
 Software:
 - Figma
@@ -150,9 +154,20 @@ Portfolio context:
 
 Primary response rules:
 - Always refer to the person as "Karl Justine". When a full formal name is needed, use "Karl Justine R. Membrere".
+- Preserve the name exactly as "Karl Justine" or "Karl Justine R. Membrere"; do not use alternate spellings or abbreviated variations.
 - Answer only the question that was asked, but do not restrict your language understanding. Understand natural phrasing, short messages, casual wording, typos, pronouns, and follow-up questions.
 - Treat the portfolio as the main source of truth, not as a rigid keyword filter.
-- If the user is greeting, thanking, or casually checking in, keep the reply short and natural.
+- Distinguish full-time employment availability from freelance availability. For work, job, employment, or full-time availability questions, answer that Karl Justine is currently available for full-time work. For freelance-specific questions, answer that he is open for freelance projects. Mention both only when the question asks generally about availability.
+- For professional and project experience questions, give a useful, specific overview rather than a one-line title: describe the relevant freelance work, internship, capstone, responsibilities, design and development work, and tools documented in the context. Include dates, project names, and technologies when relevant to the question.
+- For broad experience questions, organize the answer by freelance work, internship, and capstone, explaining Karl Justine's role and contributions in each. For a question about one role, project, or skill, focus on that subject and include only useful supporting details.
+- Provide enough detail to satisfy the question, generally a few well-formed sentences or concise paragraphs. Be direct and professional; do not give a generic chatbot answer or repeat the entire profile.
+- Format every response for readability. Put the direct answer first; use short paragraphs, blank lines between sections, and concise hyphen bullets for related lists when they improve scanning.
+- Use short, descriptive plain-text headings when an answer covers multiple areas. Group related responsibilities, projects, services, or technologies together, and keep the most relevant information first.
+- Keep simple questions to one or two natural sentences. Do not force headings or lists into short answers, and do not turn every response into a long list.
+- Balance completeness with relevance: include only details that directly answer the question, avoid repetition and long paragraphs, and do not dump all profile facts into an unrelated or narrow answer.
+- Keep responses as plain text. Do not use Markdown bold markers, HTML, or decorative formatting; the chat displays text and line breaks directly.
+- Answer college, senior-high-school, and junior-high-school questions with only the requested level. Include all levels only when the user asks for a complete educational background.
+- If the user is greeting, reply naturally and briefly, then invite them to describe a project or ask about design support. The interface will provide relevant clickable conversation starters.
 - If the answer is in the portfolio or FAQ, answer it directly and naturally.
 - If the information is not documented, say that it is not available.
 - If the user asks something clearly unrelated to Karl Justine or his portfolio, politely redirect them: "This chat is mainly for questions about Karl Justine’s portfolio, projects, skills, services, and design experience. :)"
@@ -246,20 +261,157 @@ PROMPT;
     protected function quickPortfolioReply(string $message): ?string
     {
         $normalized = strtolower(trim(preg_replace('/\s+/', ' ', $message) ?? $message));
+        $greeting = preg_replace('/[.!?,;:]+$/', '', $normalized) ?? $normalized;
 
-        if ($normalized === '' || str_contains($normalized, 'hi') || str_contains($normalized, 'hello') || str_contains($normalized, 'hey') || str_contains($normalized, 'good morning') || str_contains($normalized, 'good afternoon') || str_contains($normalized, 'good evening')) {
-            return 'Hey! How can I help?';
+        $greetingReplies = [
+            'hi' => 'Hi! How can I help you today? Have a project in mind, or are you looking for a UI/UX designer for your team?',
+            'hello' => 'Hello! Are you exploring design support for a project, or looking for a UI/UX designer to join your team?',
+            'hey' => 'Hey! How can I help? I can share Karl Justine’s design services, experience, or availability for your project or team.',
+            'hi there' => 'Hi there! Have a project in mind, or would you like to learn more about Karl Justine’s design services?',
+            'hello there' => 'Hello! Are you looking for design support on a project or a UI/UX designer for your team?',
+            'hey there' => 'Hey there! I can help you explore Karl Justine’s services, project experience, and availability.',
+            'good morning' => 'Good morning! How can I help? Are you planning a project or looking for a UI/UX designer for your team?',
+            'good afternoon' => 'Good afternoon! Have a project in mind, or are you exploring UI/UX design support for your team?',
+            'good evening' => 'Good evening! I can help with Karl Justine’s services, experience, or how to get started on a project.',
+        ];
+
+        if (isset($greetingReplies[$greeting])) {
+            return $greetingReplies[$greeting];
         }
 
         if (str_contains($normalized, 'what\'s up') || str_contains($normalized, 'how are you') || str_contains($normalized, 'how are u')) {
-            return 'Hey! I’m doing well. What would you like to know about Karl Justine?';
+            return 'Hey! I’m doing well, thanks for asking. Are you exploring design support for a project or looking for a UI/UX designer for your team?';
         }
 
         if (str_contains($normalized, 'thanks') || str_contains($normalized, 'thank you')) {
             return 'You’re welcome! Ask me about Karl Justine’s portfolio, skills, services, or freelance work.';
         }
 
+        $asksAboutInternship = str_contains($normalized, 'internship')
+            || str_contains($normalized, 'intern')
+            || str_contains($normalized, 'queuing management system');
+        $asksAboutCapstone = str_contains($normalized, 'capstone')
+            || str_contains($normalized, 'city health connect');
+
+        if ($asksAboutInternship && ! $asksAboutCapstone) {
+            return "Internship — UI/UX Designer / Developer Intern, 2026\nCity Health Office 1, Urdaneta City, Pangasinan\n\n- Project: Web-based Queuing Management System.\n- Designed workflows, wireframes, layouts, and prototypes in Figma.\n- Developed and deployed approved interfaces using PHP, HTML, CSS, JavaScript, and MySQL.\n- Focused on clear, usable interfaces aligned with office workflows.";
+        }
+
+        if ($asksAboutCapstone && ! $asksAboutInternship) {
+            return "Capstone — City Health Connect, 2025–2026\nA multi-platform health services management system for the City Health Office of Urdaneta City.\n\nRole: UI/UX Designer / Programmer\n- Designed web and mobile interfaces, wireframes, and interactive prototypes around user workflows.\n- Contributed to web and mobile development using Figma, PHP, HTML, CSS, JavaScript, Flutter, and MySQL.\n- Focused on consistent, usable interface patterns.";
+        }
+
+        if ($this->asksAboutExperience($normalized)) {
+            if ($this->asksAboutProjects($normalized) && ! str_contains($normalized, 'experience')) {
+                return "Karl Justine’s documented project work includes:\n\nQueuing Management System — Internship, 2026\nRole: UI/UX Designer / Developer Intern\n- Designed workflows, wireframes, layouts, and prototypes in Figma.\n- Developed web interfaces using PHP, HTML, CSS, JavaScript, and MySQL.\n\nCity Health Connect — Capstone, 2025–2026\nRole: UI/UX Designer / Programmer\n- Designed web and mobile interfaces and interactive prototypes.\n- Contributed to development using Figma, PHP, HTML, CSS, JavaScript, Flutter, and MySQL.\n\nHe also designs and prototypes mobile and web experiences for client and personal projects as a Freelance UI/UX Designer.";
+            }
+
+            return "Karl Justine R. Membrere is a UI/UX Designer and fresh graduate with a Bachelor of Science in Information Technology from Urdaneta City University. His experience spans freelance design, an internship, and a capstone project.\n\nFreelance UI/UX Designer — Present\n- Designs and prototypes mobile and web experiences for client and personal projects.\n- Creates wireframes, interactive prototypes, and visual interfaces using Figma, with a focus on usability and consistency.\n\nUI/UX Designer / Developer Intern — 2026\nCity Health Office 1, Urdaneta City, Pangasinan\n- Designed workflows, layouts, and prototypes for a Queuing Management System.\n- Developed web interfaces using Figma, PHP, HTML, CSS, JavaScript, and MySQL.\n\nUI/UX Designer / Programmer — Capstone, 2025–2026\nCity Health Connect, a multi-platform health services management system\n- Designed web and mobile interfaces and prototypes around project requirements and user workflows.\n- Contributed to development using Figma, PHP, HTML, CSS, JavaScript, Flutter, and MySQL.";
+        }
+
+        $availabilityReply = $this->availabilityPortfolioReply($normalized);
+        if ($availabilityReply !== null) {
+            return $availabilityReply;
+        }
+
+        if (
+            str_contains($normalized, 'professional background')
+            || str_contains($normalized, 'career background')
+            || str_contains($normalized, 'who is karl')
+            || (preg_match('/\btell me about (?:karl|him)\b/', $normalized) === 1
+                && ! preg_match('/\b(skills?|services?|projects?|experience|education|availability|contact)\b/', $normalized))
+        ) {
+            return "Karl Justine R. Membrere is a UI/UX Designer and a Bachelor of Science in Information Technology graduate of Urdaneta City University in Urdaneta City, Pangasinan.\n\nHis experience includes:\n- Freelance UI/UX Designer — Present: designs and prototypes mobile and web experiences for client and personal projects.\n- UI/UX Designer / Developer Intern — 2026: designed and developed interfaces for City Health Office 1’s Queuing Management System.\n- UI/UX Designer / Programmer — City Health Connect capstone, 2025–2026: contributed to interface design, prototyping, and development.";
+        }
+
+        $asksCollege = str_contains($normalized, 'college')
+            || str_contains($normalized, 'bachelor')
+            || str_contains($normalized, 'university')
+            || str_contains($normalized, 'degree')
+            || str_contains($normalized, 'graduate');
+        $asksJuniorHigh = str_contains($normalized, 'junior high');
+        $asksSeniorHigh = str_contains($normalized, 'senior high')
+            || (str_contains($normalized, 'high school') && ! $asksJuniorHigh);
+        $asksEducation = str_contains($normalized, 'education') || str_contains($normalized, 'studied');
+
+        $asksCompleteEducation = str_contains($normalized, 'complete education')
+            || str_contains($normalized, 'complete educational')
+            || str_contains($normalized, 'full educational')
+            || str_contains($normalized, 'entire education')
+            || str_contains($normalized, 'educational background')
+            || str_contains($normalized, 'education history')
+            || str_contains($normalized, 'all education')
+            || ($asksEducation && ! $asksCollege && ! $asksJuniorHigh && ! $asksSeniorHigh);
+
+        if ($asksCompleteEducation) {
+            return "Karl Justine’s education:\n- Bachelor of Science in Information Technology, Urdaneta City University (2022–2026).\n- Senior High School, General Academic Strand (GAS), Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022).\n- Junior High School, MPJCL (2016–2020).";
+        }
+
+        if ($asksCollege || $asksJuniorHigh || $asksSeniorHigh) {
+            $educationDetails = [];
+
+            if ($asksCollege) {
+                $educationDetails[] = 'a Bachelor of Science in Information Technology at Urdaneta City University in Urdaneta City, Pangasinan (2022–2026)';
+            }
+
+            if ($asksSeniorHigh) {
+                $educationDetails[] = 'Senior High School in the General Academic Strand (GAS) at Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022)';
+            }
+
+            if ($asksJuniorHigh) {
+                $educationDetails[] = 'Junior High School at Mataas Na Paaralang Juan C. Laya (MPJCL) (2016–2020)';
+            }
+
+            return 'Karl Justine completed '.implode(' and ', $educationDetails).'.';
+        }
+
         return null;
+    }
+
+    protected function asksAboutExperience(string $normalizedMessage): bool
+    {
+        return preg_match('/\b(experience|work history|career history|worked on|work(?:ed)? professionally|professional background)\b/', $normalizedMessage) === 1
+            || (str_contains($normalizedMessage, 'what has') && str_contains($normalizedMessage, 'worked'))
+            || preg_match('/\b(what|which)\b.{0,35}\bprojects?\b|\bprojects?\b.{0,35}\b(has|have|did|does|worked|work)\b/', $normalizedMessage) === 1;
+    }
+
+    protected function asksAboutProjects(string $normalizedMessage): bool
+    {
+        return preg_match('/\b(projects?|capstone|city health connect|queuing management system)\b/', $normalizedMessage) === 1;
+    }
+
+    protected function availabilityPortfolioReply(string $normalizedMessage): ?string
+    {
+        $asksAvailability = preg_match('/\b(available|availability|hire|hiring|accept|accepting|taking on|open for|open to|work together)\b/', $normalizedMessage) === 1;
+
+        if (! $asksAvailability) {
+            return null;
+        }
+
+        if (
+            preg_match('/\b(are|is)\s+(you|karl(?:\s+justine)?)\s+hiring\b/', $normalizedMessage) === 1
+        ) {
+            return 'The portfolio does not list Karl Justine as hiring. He is currently available for full-time work and is also open for freelance projects.';
+        }
+
+        if (
+            str_contains($normalizedMessage, 'freelance')
+            && preg_match('/\b(available|availability|hire|accept|accepting|taking on|open for|open to)\b/', $normalizedMessage) === 1
+        ) {
+            return 'Yes, Karl Justine is open for freelance projects.';
+        }
+
+        if (
+            str_contains($normalizedMessage, 'full-time')
+            || str_contains($normalizedMessage, 'full time')
+            || str_contains($normalizedMessage, 'employment')
+            || str_contains($normalizedMessage, 'job')
+            || preg_match('/\b(?:available|availability)\b.{0,24}\bwork\b|\bwork\b.{0,24}\b(?:available|availability)\b/', $normalizedMessage) === 1
+        ) {
+            return 'Yes, Karl Justine is currently available for full-time work.';
+        }
+
+        return 'Yes, Karl Justine is currently available for full-time work and is also open for freelance projects.';
     }
 
     protected function isPortfolioRelatedQuestion(string $message): bool
@@ -286,6 +438,11 @@ PROMPT;
     protected function fallbackPortfolioResponse(string $message): string
     {
         $normalized = strtolower(trim(preg_replace('/\s+/', ' ', $message) ?? $message));
+        $quickReply = $this->quickPortfolioReply($message);
+
+        if ($quickReply !== null) {
+            return $quickReply;
+        }
 
         if (! $this->isPortfolioRelatedQuestion($message)) {
             return 'This chat is mainly for questions about Karl Justine’s portfolio, projects, skills, services, and design experience. :)';
@@ -300,11 +457,11 @@ PROMPT;
         }
 
         if (str_contains($normalized, 'skill') || str_contains($normalized, 'software') || str_contains($normalized, 'tool') || str_contains($normalized, 'figma') || str_contains($normalized, 'affinity')) {
-            return 'Karl Justine works with Figma and Affinity, and his design skills include wireframing, prototyping, interaction design, visual design, UI/UX design, design systems, mobile app design, web design, and usability.';
+            return "Karl Justine’s relevant tools and design skills include:\n- Tools: Figma and Affinity.\n- Design: UI/UX and visual design, wireframing, interactive prototyping, and interaction design.\n- Product work: design systems, mobile application design, web design, and usability.\n\nHe uses these skills to plan user flows, shape clear interfaces, and refine experiences around project requirements.";
         }
 
         if (str_contains($normalized, 'service') || str_contains($normalized, 'offer') || str_contains($normalized, 'landing page') || str_contains($normalized, 'dashboard')) {
-            return 'Karl Justine offers UI/UX design, web design, mobile design, landing page design, design system, and SaaS dashboard design.';
+            return "Karl Justine offers design support for:\n- UI/UX design for web and mobile products.\n- Landing pages and SaaS dashboards.\n- Design systems.\n\nHis process can include understanding user needs and goals, planning structure and user flows, creating wireframes and prototypes, designing interfaces, and refining them through feedback.";
         }
 
         if (str_contains($normalized, 'process') || str_contains($normalized, 'design') && str_contains($normalized, 'how')) {

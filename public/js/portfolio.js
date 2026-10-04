@@ -67,16 +67,17 @@ activateScrollLock();
 const homeMain = document.querySelector('#view-home > main');
 const profileSection = document.getElementById('section-profile');
 const featuredSection = document.getElementById('section-featured');
+const experienceSection = document.getElementById('section-experience');
 const designStackSection = document.getElementById('section-design-stack');
 const educationSection = document.getElementById('section-education');
 
-if (homeMain && profileSection && featuredSection && designStackSection && educationSection) {
+if (homeMain && profileSection && featuredSection && experienceSection && designStackSection && educationSection) {
   if (profileSection !== featuredSection.previousElementSibling) {
     homeMain.insertBefore(profileSection, featuredSection);
   }
 
-  if (featuredSection !== designStackSection.previousElementSibling) {
-    homeMain.insertBefore(featuredSection, designStackSection);
+  if (featuredSection !== experienceSection.previousElementSibling) {
+    homeMain.insertBefore(featuredSection, experienceSection);
   }
 
   if (designStackSection !== educationSection.previousElementSibling) {
@@ -153,7 +154,6 @@ function closePortfolioAssistant() {
   if (input) {
     input.value = '';
     updatePortfolioAssistantInputHeight();
-    updatePortfolioAssistantCounter();
   }
 
   modal.classList.add('hidden');
@@ -167,13 +167,6 @@ function getPortfolioAssistantInput() {
 
 function getPortfolioAssistantMessages() {
   return document.getElementById('portfolioAssistantMessages');
-}
-
-function updatePortfolioAssistantCounter() {
-  const input = getPortfolioAssistantInput();
-  const counter = document.getElementById('portfolioAssistantCounter');
-  if (!input || !counter) return;
-  counter.textContent = `${input.value.length}/${PORTFOLIO_ASSISTANT_LIMIT}`;
 }
 
 function getPortfolioAssistantAvatarSource() {
@@ -361,7 +354,6 @@ async function submitPortfolioAssistantMessage(rawMessage) {
     if (input) {
       input.focus();
       input.value = trimmed.slice(0, PORTFOLIO_ASSISTANT_LIMIT);
-      updatePortfolioAssistantCounter();
     }
     return;
   }
@@ -371,7 +363,6 @@ async function submitPortfolioAssistantMessage(rawMessage) {
   portfolioAssistantRequestInFlight = true;
   appendPortfolioAssistantMessage(trimmed, 'user');
   if (input) input.value = '';
-  updatePortfolioAssistantCounter();
   const thinkingStartedAt = Date.now();
   appendPortfolioAssistantTypingIndicator();
   setPortfolioAssistantBusy(true, 'Thinking…');
@@ -458,7 +449,6 @@ function initPortfolioAssistantChat() {
 
   if (input) {
     input.addEventListener('input', () => {
-      updatePortfolioAssistantCounter();
       clearPortfolioAssistantStatus();
       updatePortfolioAssistantInputHeight();
     });
@@ -1063,6 +1053,7 @@ function toggleBurgerMenu() {
     closeBurgerMenu();
   } else {
     panel.classList.remove('hidden');
+    document.body.classList.add('mobile-nav-open');
     btn.setAttribute('aria-expanded', 'true');
     if (iconOpen) iconOpen.classList.add('hidden');
     if (iconClose) iconClose.classList.remove('hidden');
@@ -1077,6 +1068,7 @@ function closeBurgerMenu() {
   const iconClose = document.getElementById('burgerIconClose');
   if (!panel) return;
   panel.classList.add('hidden');
+  document.body.classList.remove('mobile-nav-open');
   if (btn) btn.setAttribute('aria-expanded', 'false');
   if (iconOpen) iconOpen.classList.remove('hidden');
   if (iconClose) iconClose.classList.add('hidden');

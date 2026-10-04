@@ -308,6 +308,93 @@
           </section>
 
           <!-- ================================== -->
+          <!-- ===== 3. EXPERIENCE ============== -->
+          <!-- ================================== -->
+          <section id="section-experience" class="w-full space-y-5">
+            <div class="flex items-end justify-between gap-4">
+              <p class="text-2xl sm:text-3xl font-light tracking-tight text-gray-900 dark:text-white">Experience</p>
+              <button onclick="switchView('experience')" class="group inline-flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-widest text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white shrink-0 pb-1">
+                <span>View All</span>
+                <svg class="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 7h10v10"/><path d="M7 17L17 7"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="exp-timeline">
+              <!-- Entry 1: Freelance UI/UX Designer -->
+              <div class="exp-item is-highlighted">
+                <div class="exp-dot"></div>
+                <div class="exp-line"></div>
+                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">Present</p>
+                <div class="exp-content space-y-2">
+                  <div class="flex items-baseline gap-2 flex-wrap">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Freelance UI/UX Designer</h3>
+                  </div>
+                  <ul class="exp-bullets pt-1">
+                    <li>Designing and prototyping user interfaces and user experiences for clients and personal projects, including mobile applications, websites, and other services.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Entry 2: Internship - City Health Office 1 -->
+              <div class="exp-item is-highlighted">
+                <div class="exp-dot"></div>
+                <div class="exp-line"></div>
+                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">2026</p>
+                <div class="exp-content space-y-2">
+                  <div class="flex items-baseline gap-2 flex-wrap">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Internship</h3>
+                    <span class="text-gray-300 dark:text-gray-600 select-none">·</span>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300"><span class="text-gray-400 dark:text-gray-500">Company Name:</span> City Health Office 1</p>
+                  </div>
+                  <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 22C12 22 18 16 18 10C18 6.69 15.31 4 12 4C8.69 4 6 6.69 6 10C6 16 12 22 12 22Z"/>
+                      <path d="M14.5 10C14.5 11.38 13.38 12.5 12 12.5C10.62 12.5 9.5 11.38 9.5 10C9.5 8.62 10.62 7.5 12 7.5C13.38 7.5 14.5 8.62 14.5 10Z"/>
+                    </svg>
+                    <span>Urdaneta City, Pangasinan</span>
+                  </p>
+                  <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="category-pill">Web</span>
+                  </div>
+                  <h4 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">
+                    <a href="https://chourdaneta-queuing.site/" target="_blank" rel="noopener noreferrer" class="hover:underline inline-flex items-center gap-1">
+                      Queuing Management System
+                      <svg class="w-3 h-3 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
+                    </a>
+                  </h4>
+                  <ul class="exp-bullets pt-1">
+                    <li>Developed a queuing management system for managing patients in the waiting area, doctor queues, and encoder queues.</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Entry 3: Programmer and UI/UX Designer - Capstone Project -->
+              <div class="exp-item is-highlighted">
+                <div class="exp-dot"></div>
+                <div class="exp-line"></div>
+                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">2025 – 2026</p>
+                <div class="exp-content space-y-2">
+                  <div class="flex items-baseline gap-2 flex-wrap">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Capstone Project</h3>
+                    <span class="text-gray-300 dark:text-gray-600 select-none">·</span>
+                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">UI/UX Designer / Programmer</p>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5 pt-1">
+                    <span class="category-pill">Web</span>
+                    <span class="category-pill">Mobile Application</span>
+                  </div>
+                  <h4 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white leading-snug">City Health Connect: A multi-platform health services management system for the City Health Office of Urdaneta City</h4>
+                  <ul class="exp-bullets pt-1">
+                    <li>Developed the system through web and mobile applications for managing patient records, queuing, and other health services.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ================================== -->
           <!-- ===== 2. DESIGN STACK ============ -->
           <!-- ================================== -->
           <section id="section-design-stack" class="w-full space-y-5">
@@ -502,85 +589,6 @@
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#ec4899;"><path d="M3 21L7.5 16.5"/><path d="M7.5 16.5L16.5 7.5C17.6 6.4 17.6 4.6 16.5 3.5C15.4 2.4 13.6 2.4 12.5 3.5L3.5 12.5L7.5 16.5Z"/><path d="M13 7L17 11"/></svg>
                     UI/UX Design
                   </span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- ================================== -->
-          <!-- ===== 3. EXPERIENCE ============== -->
-          <!-- ================================== -->
-          <section id="section-experience" class="hidden w-full space-y-5">
-            <p class="text-2xl sm:text-3xl font-light tracking-tight text-gray-900 dark:text-white">Experience</p>
-
-            <div class="exp-timeline">
-              <!-- Entry 1: Freelance UI/UX Designer -->
-              <div class="exp-item is-highlighted">
-                <div class="exp-dot"></div>
-                <div class="exp-line"></div>
-                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">Present</p>
-                <div class="exp-content space-y-2">
-                  <div class="flex items-baseline gap-2 flex-wrap">
-                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Freelance UI/UX Designer</h3>
-                  </div>
-                  <ul class="exp-bullets pt-1">
-                    <li>Designing and prototyping user interfaces and user experiences for clients and personal projects, including mobile applications, websites, and other services.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Entry 2: Internship - City Health Office 1 -->
-              <div class="exp-item is-highlighted">
-                <div class="exp-dot"></div>
-                <div class="exp-line"></div>
-                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">2026</p>
-                <div class="exp-content space-y-2">
-                  <div class="flex items-baseline gap-2 flex-wrap">
-                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Internship</h3>
-                    <span class="text-gray-300 dark:text-gray-600 select-none">·</span>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300"><span class="text-gray-400 dark:text-gray-500">Company Name:</span> City Health Office 1</p>
-                  </div>
-                  <p class="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M12 22C12 22 18 16 18 10C18 6.69 15.31 4 12 4C8.69 4 6 6.69 6 10C6 16 12 22 12 22Z"/>
-                      <path d="M14.5 10C14.5 11.38 13.38 12.5 12 12.5C10.62 12.5 9.5 11.38 9.5 10C9.5 8.62 10.62 7.5 12 7.5C13.38 7.5 14.5 8.62 14.5 10Z"/>
-                    </svg>
-                    <span>Urdaneta City, Pangasinan</span>
-                  </p>
-                  <div class="flex flex-wrap gap-1.5 pt-1">
-                    <span class="category-pill">Web</span>
-                  </div>
-                  <h4 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white">
-                    <a href="https://chourdaneta-queuing.site/" target="_blank" rel="noopener noreferrer" class="hover:underline inline-flex items-center gap-1">
-                      Queuing Management System
-                      <svg class="w-3 h-3 opacity-60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
-                    </a>
-                  </h4>
-                  <ul class="exp-bullets pt-1">
-                    <li>Developed a queuing management system for managing patients in the waiting area, doctor queues, and encoder queues.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Entry 3: Programmer and UI/UX Designer - Capstone Project -->
-              <div class="exp-item is-highlighted">
-                <div class="exp-dot"></div>
-                <div class="exp-line"></div>
-                <p class="exp-date text-xs font-medium text-gray-400 dark:text-gray-500 whitespace-nowrap">2025 – 2026</p>
-                <div class="exp-content space-y-2">
-                  <div class="flex items-baseline gap-2 flex-wrap">
-                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 dark:text-white leading-tight">Capstone Project</h3>
-                    <span class="text-gray-300 dark:text-gray-600 select-none">·</span>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">UI/UX Designer / Programmer</p>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5 pt-1">
-                    <span class="category-pill">Web</span>
-                    <span class="category-pill">Mobile Application</span>
-                  </div>
-                  <h4 class="mt-2 text-sm font-semibold text-gray-900 dark:text-white leading-snug">City Health Connect: A multi-platform health services management system for the City Health Office of Urdaneta City</h4>
-                  <ul class="exp-bullets pt-1">
-                    <li>Developed the system through web and mobile applications for managing patient records, queuing, and other health services.</li>
-                  </ul>
                 </div>
               </div>
             </div>
@@ -1256,9 +1264,6 @@
                   <path d="M21 3L14 21L10 14L3 10L21 3Z"/>
                 </svg>
               </button>
-            </div>
-            <div class="portfolio-assistant-meta">
-              <span id="portfolioAssistantCounter">0/500</span>
             </div>
           </form>
         </div>

@@ -697,27 +697,9 @@ body.portfolio-loading::-webkit-scrollbar {
   cursor: wait;
 }
 
-.portfolio-assistant-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.75rem;
-  margin-top: 0.6rem;
-  color: #6b7280;
-  font-size: 0.7rem;
-}
-
-.dark .portfolio-assistant-meta {
-  color: #9ca3af;
-}
-
 #portfolioAssistantStatus {
   flex: 1;
   min-width: 0;
-}
-
-#portfolioAssistantCounter {
-  flex-shrink: 0;
 }
 
 @media (min-width: 640px) {
@@ -1398,6 +1380,11 @@ section {
 @media (max-width: 639px) {
   #mobileNavPanel:not(.hidden) {
     display: flex;
+  }
+
+  body.mobile-nav-open .portfolio-chat-launcher,
+  body.mobile-nav-open #portfolioAssistantModal {
+    display: none !important;
   }
 }
 

@@ -18,10 +18,10 @@ class PortfolioChatTest extends TestCase
 
     #[TestWith(['Hi', 'Hi! How can I help you today? Have a project in mind, or are you looking for a UI/UX designer for your team?'])]
     #[TestWith(['Hello!', 'Hello! Are you exploring design support for a project, or looking for a UI/UX designer to join your team?'])]
-    #[TestWith(['Hey', 'Hey! How can I help? I can share Karl Justine’s design services, experience, or availability for your project or team.'])]
+    #[TestWith(['Hey', 'Hey! How can I help? I can share my design services, experience, or availability for your project or team.'])]
     #[TestWith(['Good morning', 'Good morning! How can I help? Are you planning a project or looking for a UI/UX designer for your team?'])]
     #[TestWith(['Good afternoon.', 'Good afternoon! Have a project in mind, or are you exploring UI/UX design support for your team?'])]
-    #[TestWith(['Good evening!', 'Good evening! I can help with Karl Justine’s services, experience, or how to get started on a project.'])]
+    #[TestWith(['Good evening!', 'Good evening! I can help with my services, experience, or how to get started on a project.'])]
     #[TestWith(['How are you?', 'Hey! I’m doing well, thanks for asking. Are you exploring design support for a project or looking for a UI/UX designer for your team?'])]
     public function test_it_replies_to_standalone_greetings(string $message, string $reply): void
     {
@@ -48,6 +48,10 @@ class PortfolioChatTest extends TestCase
         $this->assertStringContainsString('PHP, HTML, CSS, JavaScript, and MySQL', $answer);
         $this->assertStringContainsString('City Health Connect', $answer);
         $this->assertStringContainsString('Flutter', $answer);
+        $this->assertStringContainsString('My experience spans freelance design', $answer);
+        $this->assertStringContainsString('I designed workflows', $answer);
+        $this->assertStringNotContainsString('His experience', $answer);
+        $this->assertStringNotContainsString('Karl Justine', $answer);
         $this->assertStringContainsString("\n\nFreelance UI/UX Designer — Present\n-", $answer);
         $this->assertStringContainsString("\n\nUI/UX Designer / Developer Intern — 2026\n", $answer);
         $this->assertStringContainsString("\n\nUI/UX Designer / Programmer — Capstone, 2025–2026\n", $answer);
@@ -64,8 +68,11 @@ class PortfolioChatTest extends TestCase
         $this->assertStringContainsString('City Health Connect', $answer);
         $this->assertStringContainsString('UI/UX Designer / Programmer', $answer);
         $this->assertStringContainsString('Flutter', $answer);
-        $this->assertStringContainsString("\n\nQueuing Management System — Internship, 2026\nRole:", $answer);
-        $this->assertStringContainsString("\n\nCity Health Connect — Capstone, 2025–2026\nRole:", $answer);
+        $this->assertStringContainsString('I designed workflows', $answer);
+        $this->assertStringContainsString('I contributed to development', $answer);
+        $this->assertStringNotContainsString('He also', $answer);
+        $this->assertStringContainsString("\n\nQueuing Management System — Internship, 2026\nMy role:", $answer);
+        $this->assertStringContainsString("\n\nCity Health Connect — Capstone, 2025–2026\nMy role:", $answer);
     }
 
     public function test_it_instructs_gemini_to_format_answers_for_readability(): void
@@ -109,6 +116,8 @@ class PortfolioChatTest extends TestCase
         $this->assertStringContainsString('Queuing Management System', $answer);
         $this->assertStringContainsString('wireframes, layouts, and prototypes', $answer);
         $this->assertStringContainsString('PHP, HTML, CSS, JavaScript, and MySQL', $answer);
+        $this->assertStringContainsString('I designed workflows', $answer);
+        $this->assertStringContainsString('I developed and deployed', $answer);
     }
 
     public function test_it_explains_the_capstone_role_and_contributions(): void
@@ -123,14 +132,16 @@ class PortfolioChatTest extends TestCase
         $this->assertStringContainsString('web and mobile interfaces', $answer);
         $this->assertStringContainsString('Flutter', $answer);
         $this->assertStringContainsString('MySQL', $answer);
+        $this->assertStringContainsString('My capstone was City Health Connect', $answer);
+        $this->assertStringContainsString('My role: UI/UX Designer / Programmer', $answer);
     }
 
-    #[TestWith(['Is Karl Justine available for work?', 'Yes, Karl Justine is currently available for full-time work.'])]
-    #[TestWith(['Is Karl available to work?', 'Yes, Karl Justine is currently available for full-time work.'])]
-    #[TestWith(['Is Karl available for full-time work?', 'Yes, Karl Justine is currently available for full-time work.'])]
-    #[TestWith(['Is Karl available for freelance projects?', 'Yes, Karl Justine is open for freelance projects.'])]
-    #[TestWith(['Can I hire Karl for freelance projects?', 'Yes, Karl Justine is open for freelance projects.'])]
-    #[TestWith(['Is Karl available?', 'Yes, Karl Justine is currently available for full-time work and is also open for freelance projects.'])]
+    #[TestWith(['Is Karl Justine available for work?', 'Yes, I am currently available for full-time work.'])]
+    #[TestWith(['Is Karl available to work?', 'Yes, I am currently available for full-time work.'])]
+    #[TestWith(['Is Karl available for full-time work?', 'Yes, I am currently available for full-time work.'])]
+    #[TestWith(['Is Karl available for freelance projects?', 'Yes, I am open for freelance projects.'])]
+    #[TestWith(['Can I hire Karl for freelance projects?', 'Yes, I am open for freelance projects.'])]
+    #[TestWith(['Is Karl available?', 'Yes, I am currently available for full-time work and am also open for freelance projects.'])]
     public function test_it_answers_availability_according_to_the_question(string $message, string $reply): void
     {
         $this->postJson('/api/portfolio-chat', ['message' => $message])
@@ -145,7 +156,9 @@ class PortfolioChatTest extends TestCase
         $response->assertOk();
         $answer = $response->json('message');
         $this->assertIsString($answer);
-        $this->assertStringContainsString('Karl Justine R. Membrere', $answer);
+        $this->assertStringContainsString('I am a UI/UX Designer', $answer);
+        $this->assertStringContainsString('My experience spans freelance design', $answer);
+        $this->assertStringNotContainsString('Karl Justine R. Membrere', $answer);
         $this->assertStringContainsString('Bachelor of Science in Information Technology', $answer);
         $this->assertStringContainsString('Urdaneta City University', $answer);
         $this->assertStringContainsString('Freelance UI/UX Designer', $answer);
@@ -153,10 +166,10 @@ class PortfolioChatTest extends TestCase
         $this->assertStringContainsString('City Health Connect', $answer);
     }
 
-    #[TestWith(['What did Karl study in college?', 'Karl Justine completed a Bachelor of Science in Information Technology at Urdaneta City University in Urdaneta City, Pangasinan (2022–2026).'])]
-    #[TestWith(['Where did he go to high school?', 'Karl Justine completed Senior High School in the General Academic Strand (GAS) at Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022).'])]
-    #[TestWith(['What about junior high?', 'Karl Justine completed Junior High School at Mataas Na Paaralang Juan C. Laya (MPJCL) (2016–2020).'])]
-    #[TestWith(['What was his junior high school?', 'Karl Justine completed Junior High School at Mataas Na Paaralang Juan C. Laya (MPJCL) (2016–2020).'])]
+    #[TestWith(['What did Karl study in college?', 'I completed a Bachelor of Science in Information Technology at Urdaneta City University in Urdaneta City, Pangasinan (2022–2026).'])]
+    #[TestWith(['Where did he go to high school?', 'I completed Senior High School in the General Academic Strand (GAS) at Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022).'])]
+    #[TestWith(['What about junior high?', 'I completed Junior High School at Mataas Na Paaralang Juan C. Laya (MPJCL) (2016–2020).'])]
+    #[TestWith(['What was his junior high school?', 'I completed Junior High School at Mataas Na Paaralang Juan C. Laya (MPJCL) (2016–2020).'])]
     public function test_it_limits_education_answers_to_the_requested_level(string $message, string $reply): void
     {
         $this->postJson('/api/portfolio-chat', ['message' => $message])
@@ -169,7 +182,16 @@ class PortfolioChatTest extends TestCase
         $this->postJson('/api/portfolio-chat', ['message' => 'What is Karl’s complete educational background?'])
             ->assertOk()
             ->assertExactJson([
-                'message' => "Karl Justine’s education:\n- Bachelor of Science in Information Technology, Urdaneta City University (2022–2026).\n- Senior High School, General Academic Strand (GAS), Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022).\n- Junior High School, MPJCL (2016–2020).",
+                'message' => "My education:\n- I completed a Bachelor of Science in Information Technology at Urdaneta City University (2022–2026).\n- I completed Senior High School in the General Academic Strand (GAS) at Mataas Na Paaralang Juan C. Laya (MPJCL) (2020–2022).\n- I completed Junior High School at MPJCL (2016–2020).",
+            ]);
+    }
+
+    public function test_it_answers_skills_in_first_person_without_losing_documented_details(): void
+    {
+        $this->postJson('/api/portfolio-chat', ['message' => 'What are Karl Justine’s skills?'])
+            ->assertOk()
+            ->assertExactJson([
+                'message' => 'My main tools and design skills focus on creating clear, usable interfaces. I use Figma and Affinity, and my design skills include UI/UX and visual design, wireframing, interactive prototyping, interaction design, design systems, mobile application design, web design, and usability. I use these skills to plan user flows, shape clear interfaces, and refine experiences around project requirements.',
             ]);
     }
 }

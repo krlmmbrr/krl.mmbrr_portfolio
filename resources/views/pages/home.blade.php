@@ -103,7 +103,7 @@
         <button onclick="switchView('projects'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="projects">Projects</button>
         <button onclick="switchView('experience'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="experience">Experience</button>
         <button onclick="switchView('faq'); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="faq">FAQs</button>
-        <button onclick="navigateToContact(); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3">Contact</button>
+        <button onclick="navigateToContact(); closeBurgerMenu()" class="nav-link text-lg font-normal text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors text-left py-3" data-nav="contact">Contact</button>
       </div>
     </div>
 

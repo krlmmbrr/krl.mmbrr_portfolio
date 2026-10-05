@@ -1041,6 +1041,50 @@ function navigateToSection(sectionId) {
 /* =====================================================
    BURGER MENU — Mobile navigation (full-screen overlay)
    ===================================================== */
+function updateMobileActiveNav() {
+  const panel = document.getElementById('mobileNavPanel');
+  const activeView = document.querySelector('.view.active');
+  if (!panel || !activeView) return;
+
+  let activeNav = activeView.id.replace('view-', '');
+  if (activeNav === 'home') {
+    const header = document.querySelector('header');
+    const sectionThreshold = (header ? header.offsetHeight : 0) + 24;
+    const sections = Array.from(document.querySelectorAll('#view-home > main > section[id]'));
+    const sectionNav = {
+      'section-profile': 'home',
+      'section-featured': 'projects',
+      'section-experience': 'experience',
+      'section-contact': 'contact'
+    };
+    const currentSection = sections.find(section => {
+      const bounds = section.getBoundingClientRect();
+      return bounds.top <= sectionThreshold && bounds.bottom > sectionThreshold;
+    });
+
+    activeNav = currentSection ? sectionNav[currentSection.id] || null : null;
+    const footer = document.querySelector('footer');
+    if (!activeNav && footer) {
+      const footerBounds = footer.getBoundingClientRect();
+      if (footerBounds.top < window.innerHeight && footerBounds.bottom > sectionThreshold) {
+        activeNav = 'contact';
+      }
+    }
+  } else if (activeNav === 'project-detail') {
+    activeNav = 'projects';
+  } else if (activeNav === 'design-stack') {
+    activeNav = null;
+  }
+
+  panel.querySelectorAll('[data-nav]').forEach(btn => {
+    if (btn.getAttribute('data-nav') === activeNav) {
+      btn.setAttribute('data-active', 'true');
+    } else {
+      btn.removeAttribute('data-active');
+    }
+  });
+}
+
 function toggleBurgerMenu() {
   const panel = document.getElementById('mobileNavPanel');
   const btn = document.getElementById('burgerMenuBtn');
@@ -1052,6 +1096,7 @@ function toggleBurgerMenu() {
   if (isOpen) {
     closeBurgerMenu();
   } else {
+    updateMobileActiveNav();
     panel.classList.remove('hidden');
     document.body.classList.add('mobile-nav-open');
     btn.setAttribute('aria-expanded', 'true');
@@ -1076,6 +1121,10 @@ function closeBurgerMenu() {
 }
 
 (function initBurgerMenuListeners() {
+  window.addEventListener('scroll', () => {
+    updateMobileActiveNav();
+  }, { passive: true });
+
   document.addEventListener('click', (e) => {
     const panel = document.getElementById('mobileNavPanel');
     const btn = document.getElementById('burgerMenuBtn');
